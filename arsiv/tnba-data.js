@@ -54,7 +54,17 @@ export const WEEK = {
     ["Rhizus Hawks", 6, "Wildcats", 5]
   ],
   leaders: [
-    ["PTS", "POINTS", "598", "Ventolins"]
+    ["FG%", "FIELD GOAL %", ".522", "Eagles"],
+    ["FT%", "FREE THROW %", ".865", "Ventolins"],
+    ["3PTM", "THREE POINTERS MADE", "83", "Ventolins"],
+    ["PTS", "POINTS", "613", "Phoenix Ashes"],
+    ["OREB", "OFFENSIVE REBOUNDS", "62", "God's Wrath"],
+    ["DREB", "DEFENSIVE REBOUNDS", "181", "Sin City Wolves"],
+    ["AST", "ASSISTS", "178", "Sultan Selim Suns"],
+    ["ST", "STEALS", "55", "Phoenix Ashes"],
+    ["BLK", "BLOCKS", "30", "Dağsu Bears"],
+    ["TO", "TURNOVERS", "41", "Dağsu Bears"],
+    ["A/T", "ASSIST / TURNOVER", "2.78", "Ventolins"]
   ]
 };
 
@@ -75,7 +85,17 @@ export const FIXTURES = {
 };
 // Kategori lideri OYUNCULAR.
 export const PLAYER_LEADERS = [
-
+  ["FG%", "FIELD GOAL %", ".712", "Nikola Jokić", "Ventolins"],
+  ["FT%", "FREE THROW %", ".933", "Stephen Curry", "Sin City Wolves"],
+  ["3PTM", "THREE POINTERS MADE", "22", "Stephen Curry", "Sin City Wolves"],
+  ["PTS", "POINTS", "187", "Luka Dončić", "Dosma's Crazy Horses"],
+  ["OREB", "OFFENSIVE REBOUNDS", "19", "Ivica Zubac", "Cardinals"],
+  ["DREB", "DEFENSIVE REBOUNDS", "52", "Domantas Sabonis", "Phoenix Ashes"],
+  ["AST", "ASSISTS", "54", "Trae Young", "Sultan Selim Suns"],
+  ["ST", "STEALS", "13", "Dyson Daniels", "Kaplıca Gunslingers"],
+  ["BLK", "BLOCKS", "11", "Victor Wembanyama", "San Andon Spurs"],
+  ["TO", "TURNOVERS", "2", "Derrick White", "Borçka Bulls"],
+  ["A/T", "ASSIST / TURNOVER", "5.40", "Tyus Jones", "Peripol Hornets"]
 ];
 
 // Haftanın Maçı — en çekişmeli maç otomatik seçilir.
