@@ -1,24 +1,24 @@
 // T-NBA CHAMPIONSHIP — haftalık veri. Bu dosya otomasyonla üretilir (src/build-data.js | src/derive-week.js).
 // prev: takımın geçen haftaki sırası (ilk haftada null) — sıra okları bundan hesaplanır.
 export const TEAMS = {
-  "Dosma's Crazy Horses": ["DC", "#915A2B"],
-  "Sin City Wolves": ["SW", "#5D7285"],
-  "Ventolins": ["VE", "#1782C4"],
-  "Cardinals": ["CA", "#A6192E"],
-  "San Andon Spurs": ["SA", "#8E9296"],
-  "Kaplıca Gunslingers": ["KG", "#607D8B"],
-  "Phoenix Ashes": ["PA", "#C0452B"],
-  "Borçka Bulls": ["BB", "#CE1141"],
-  "Peripol Hornets": ["PH", "#00889E"],
-  "Wild Butterfli's": ["WB", "#8A5BB0"],
-  "Sultan Selim Suns": ["SS", "#E8872B"],
-  "Dağsu Bears": ["DB", "#4E7A54"],
-  "Ottoman": ["OT", "#9E2235"],
-  "God's Wrath": ["GW", "#6A4FA8"],
-  "Giresun Hazelnuts": ["GH", "#8A6A42"],
-  "Eagles": ["EA", "#0E7C4A"],
-  "Rhizus Hawks": ["RH", "#E03A3E"],
-  "Wildcats": ["WC", "#3B62C4"]
+  "Dosma's Crazy Horses": ["DC", "#915A2B", "assets/teams/DC.png"],
+  "Sin City Wolves": ["SW", "#5D7285", "assets/teams/SW.jpg"],
+  "Ventolins": ["VE", "#1782C4", "assets/teams/VE.jpg"],
+  "Cardinals": ["CA", "#A6192E", "assets/teams/CA.jpg"],
+  "San Andon Spurs": ["SA", "#8E9296", "assets/teams/SA.jpg"],
+  "Kaplıca Gunslingers": ["KG", "#607D8B", "assets/teams/KG.png"],
+  "Phoenix Ashes": ["PA", "#C0452B", "assets/teams/PA.jpg"],
+  "Borçka Bulls": ["BB", "#CE1141", "assets/teams/BB.jpg"],
+  "Peripol Hornets": ["PH", "#00889E", "assets/teams/PH.png"],
+  "Wild Butterfli's": ["WB", "#8A5BB0", "assets/teams/WB.png"],
+  "Sultan Selim Suns": ["SS", "#E8872B", "assets/teams/SS.jpg"],
+  "Dağsu Bears": ["DB", "#4E7A54", "assets/teams/DB.png"],
+  "Ottoman": ["OT", "#9E2235", "assets/teams/OT.jpg"],
+  "God's Wrath": ["GW", "#6A4FA8", "assets/teams/GW.jpg"],
+  "Giresun Hazelnuts": ["GH", "#8A6A42", "assets/teams/GH.png"],
+  "Eagles": ["EA", "#0E7C4A", "assets/teams/EA.jpg"],
+  "Rhizus Hawks": ["RH", "#E03A3E", "assets/teams/RH.jpg"],
+  "Wildcats": ["WC", "#3B62C4", "assets/teams/WC.jpg"]
 };
 export const WEEK = {
   hafta: 14,

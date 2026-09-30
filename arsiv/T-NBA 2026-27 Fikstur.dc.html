@@ -15,7 +15,7 @@
 </helmet>
 <div data-screen-label="Fikstur 26-27" style="width:1080px;height:1920px;box-sizing:border-box;position:relative;overflow:hidden;background:var(--color-bg,#f3f2f2);color:var(--color-text,#201e1d);font-family:var(--font-body,'Archivo',sans-serif);display:flex;flex-direction:column;padding:56px 64px 44px">
   <div style="display:flex;align-items:center;gap:22px;padding-bottom:22px;border-bottom:2px solid var(--color-text,#201e1d)">
-    <img src="assets/tnba-logo.png" alt="T-NBA" style="width:72px;height:72px;border-radius:50%;box-shadow:0 0 0 2px var(--color-text,#201e1d)"></img>
+    <img src="assets/tnba-logo-pro.png" alt="T-NBA" style="width:72px;height:72px;border-radius:50%;box-shadow:0 0 0 2px var(--color-text,#201e1d)"></img>
     <div style="font-size:27px;font-weight:900;letter-spacing:0.1em;white-space:nowrap">T-NBA CHAMPIONSHIP</div>
     <div style="margin-left:auto;background:var(--color-accent,#ec3013);color:#fff;font-size:16px;font-weight:800;letter-spacing:0.18em;padding:10px 18px;white-space:nowrap">2026-27 SEZONU</div>
   </div>
@@ -29,7 +29,7 @@
         <div style="position:absolute;left:0;top:0;bottom:0;width:6px;background:{{ p.lc }}"></div>
         <div style="position:absolute;right:0;top:0;bottom:0;width:6px;background:{{ p.rc }}"></div>
         <div style="display:flex;align-items:center;gap:16px;min-width:0">
-          <div style="flex-shrink:0;width:48px;height:48px;border:2px solid {{ p.lc }};box-sizing:border-box;background:#fff;overflow:hidden;position:relative;display:grid;place-items:center;font-size:14px;font-weight:800"><span>{{ p.lm }}</span><div style="position:absolute;inset:0"><image-slot id="tl-{{ p.lm }}" bare="true" shape="rect" placeholder="{{ p.lm }}"></image-slot></div></div>
+          <img src="{{ p.llogo }}" alt="" style="flex-shrink:0;width:75px;height:75px;object-fit:contain;display:block"></img>
           <div style="min-width:0;font-size:25px;font-weight:800;white-space:nowrap">{{ p.ln }}</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
@@ -38,26 +38,26 @@
         </div>
         <div style="display:flex;align-items:center;justify-content:flex-end;gap:16px;min-width:0">
           <div style="min-width:0;font-size:25px;font-weight:800;white-space:nowrap;text-align:right">{{ p.rn }}</div>
-          <div style="flex-shrink:0;width:48px;height:48px;border:2px solid {{ p.rc }};box-sizing:border-box;background:#fff;overflow:hidden;position:relative;display:grid;place-items:center;font-size:14px;font-weight:800"><span>{{ p.rm }}</span><div style="position:absolute;inset:0"><image-slot id="tl-{{ p.rm }}" bare="true" shape="rect" placeholder="{{ p.rm }}"></image-slot></div></div>
+          <img src="{{ p.rlogo }}" alt="" style="flex-shrink:0;width:75px;height:75px;object-fit:contain;display:block"></img>
         </div>
       </div>
     </sc-for>
   </div>
   <div style="margin-top:22px;display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:2px solid var(--color-text,#201e1d);font-size:15px;font-weight:700;letter-spacing:0.22em;color:rgba(32,30,29,0.55)">
-    <div>T-NBA CHAMPIONSHIP</div><div>2026-27 SEZONU</div>
+    <div style="white-space:nowrap">T-NBA CHAMPIONSHIP</div><div style="white-space:nowrap">2026-27 SEZONU</div>
   </div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:1920}}">
 class Component extends DCLogic {
   state = { d: null };
-  componentDidMount() { import('./tnba-data.js').then(m => this.setState({ d: m })); }
+  componentDidMount() { import('./tnba-data.js').then(m => { this.setState({ d: m }); import('./tnba-logo-fx.js').then(fx => fx.processTeams(m.TEAMS)).then(T => this.setState({ d: { ...m, TEAMS: T } })); }); }
   renderVals() {
     const d = this.state.d;
     if (!d) return { fhafta: "", pairs: [] };
     const T = d.TEAMS;
     const FX = d.FIXTURES || { hafta: d.WEEK.hafta + 1, pairs: d.WEEK.matchups.map(g => [g[0], g[2]]) };
-    const pairs = FX.pairs.map(p => ({ ln: p[0], rn: p[1], lm: T[p[0]][0], lc: T[p[0]][1], rm: T[p[1]][0], rc: T[p[1]][1] }));
+    const pairs = FX.pairs.map(p => ({ ln: p[0], rn: p[1], lm: T[p[0]][0], lc: T[p[0]][1], llogo: T[p[0]][2], rm: T[p[1]][0], rc: T[p[1]][1], rlogo: T[p[1]][2] }));
     return { fhafta: FX.hafta, pairs };
   }
 }

@@ -15,7 +15,7 @@
 </helmet>
 <div data-screen-label="Oyuncu Liderleri 26-27" style="width:1080px;height:1920px;box-sizing:border-box;position:relative;overflow:hidden;background:var(--color-bg,#f3f2f2);color:var(--color-text,#201e1d);font-family:var(--font-body,'Archivo',sans-serif);display:flex;flex-direction:column;padding:56px 64px 44px">
   <div style="display:flex;align-items:center;gap:22px;padding-bottom:22px;border-bottom:2px solid var(--color-text,#201e1d)">
-    <img src="assets/tnba-logo.png" alt="T-NBA" style="width:72px;height:72px;border-radius:50%;box-shadow:0 0 0 2px var(--color-text,#201e1d)"></img>
+    <img src="assets/tnba-logo-pro.png" alt="T-NBA" style="width:72px;height:72px;border-radius:50%;box-shadow:0 0 0 2px var(--color-text,#201e1d)"></img>
     <div style="font-size:27px;font-weight:900;letter-spacing:0.1em;white-space:nowrap">T-NBA CHAMPIONSHIP</div>
     <div style="margin-left:auto;background:var(--color-accent,#ec3013);color:#fff;font-size:16px;font-weight:800;letter-spacing:0.18em;padding:10px 18px;white-space:nowrap">2026-27 SEZONU</div>
   </div>
@@ -34,7 +34,7 @@
           <div style="margin-top:5px;font-size:13px;font-weight:700;letter-spacing:0.14em;color:rgba(32,30,29,0.5)">{{ c.desc }}</div>
         </div>
         <div style="display:flex;align-items:center;gap:16px;min-width:0">
-          <div style="flex-shrink:0;width:46px;height:46px;border:2px solid {{ c.tc }};box-sizing:border-box;background:#fff;overflow:hidden;position:relative;display:grid;place-items:center;font-size:14px;font-weight:800"><span>{{ c.tm }}</span><div style="position:absolute;inset:0"><image-slot id="tl-{{ c.tm }}" bare="true" shape="rect" placeholder="{{ c.tm }}"></image-slot></div></div>
+          <img src="{{ c.tlogo }}" alt="" style="flex-shrink:0;width:73px;height:73px;object-fit:contain;display:block"></img>
           <div style="min-width:0">
             <div style="font-size:27px;font-weight:800;white-space:nowrap">{{ c.player }}</div>
             <div style="margin-top:4px;font-size:14px;font-weight:700;letter-spacing:0.12em;color:rgba(32,30,29,0.5);white-space:nowrap">{{ c.teamUp }}</div>
@@ -45,21 +45,21 @@
     </sc-for>
   </div>
   <div style="margin-top:20px;display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:2px solid var(--color-text,#201e1d);font-size:15px;font-weight:700;letter-spacing:0.22em;color:rgba(32,30,29,0.55)">
-    <div>T-NBA CHAMPIONSHIP</div><div>2026-27 SEZONU</div>
+    <div style="white-space:nowrap">T-NBA CHAMPIONSHIP</div><div style="white-space:nowrap">2026-27 SEZONU</div>
   </div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:1920}}">
 class Component extends DCLogic {
   state = { d: null };
-  componentDidMount() { import('./tnba-data.js').then(m => this.setState({ d: m })); }
+  componentDidMount() { import('./tnba-data.js').then(m => { this.setState({ d: m }); import('./tnba-logo-fx.js').then(fx => fx.processTeams(m.TEAMS)).then(T => this.setState({ d: { ...m, TEAMS: T } })); }); }
   renderVals() {
     const d = this.state.d;
     if (!d) return { hafta: "", cats: [] };
     const T = d.TEAMS;
     const cats = (d.PLAYER_LEADERS || []).map(c => ({
       code: c[0], desc: c[1], val: c[2], player: c[3],
-      teamUp: c[4].toUpperCase(), tm: T[c[4]][0], tc: T[c[4]][1]
+      teamUp: c[4].toUpperCase(), tm: T[c[4]][0], tc: T[c[4]][1], tlogo: T[c[4]][2]
     }));
     return { hafta: d.WEEK.hafta, cats };
   }

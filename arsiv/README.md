@@ -33,13 +33,32 @@ Ortak dil: zemin `#f3f2f2`, mürekkep `#201e1d`, tek vurgu kırmızı `#ec3013`,
 ### Şampiyonlar — Klasik Yeşil (`T-NBA Sampiyonlar Klasik Yesil.dc.html`, label `Sampiyonlar Klasik Yesil`)
 Gravür/onur panosu: zemin `#122A1E`, metin `#EDE2C4`, vurgu pirinç `#BC9440`; çift ince çerçeve (inset 30px/40px); başlık **Playfair Display** 90px/700 "Şampiyonlar Listesi", baklava uçlu ayraçlar; her giriş: sezon (20px, 0.34em aralık, pirinç) → takım (Playfair 54px/700) → ★'lar (13px pirinç, kümülatif); son şampiyonda "SON ŞAMPİYON" satırı; boş sezon girişi: `2026-27` → italik *"Sıradaki şampiyon?"* (47px) → "SEZON SONUNDA YAZILACAK"; en altta "EN ÇOK ŞAMPİYONLUK" sayacı (17px/500 isimler + pirinç ★).
 
+### Draft Sırası (`T-NBA Draft Sirasi.dc.html`, label `Draft Sirasi`)
+Tek sayfa 1080×1920: ince başlık "Draft Sırası" (96px/700), 16 Ekim · 22.00 · Snake; iki sütun × 9 sıra; sıra no, işlenmiş logo (84px), takım adı — sayılar ve isimler başlık fontuyla (Archivo 700, sıkı harf aralığı); 1. seçim kırmızı; altta Tur 1 / Tur 2 / Toplam şeridi. Draft sırası dosyanın logic class'ındaki `ORDER` dizisindedir.
+
+### T-NBA 101 — Lig Rehberi (`T-NBA 101 Kartlar.dc.html`)
+6 adet 1080×1920 kart (labels: `101 Kapak`, `101 01` … `101 05`): Kapak, Draft, Takım Kadrosu, Kategoriler ve Lig Tablosu, Takas, Free Agent. WhatsApp'ta albüm olarak paylaşılır.
+
 ### Animasyonlu Story (`T-NBA Story Animasyon.dc.html` + `tnba-story-scene.jsx` + `animations-v3.jsx`)
 23sn, 5 sahne (Açılış → Skorlar → İlk 3 → En'ler → Kapanış), sahne listesi `window.OM_SCENES`'te; aynı `tnba-data.js`'ten beslenir. PNG değil video/canlı kullanım içindir; MP4 export tarayıcıdan yapılır.
 
 ### Sezon Arşivi (`T-NBA Arsiv.dc.html`)
 Paylaşım görseli değil, gezilebilir arşiv sayfası: `arsiv/haftalar.js` manifesti + `arsiv/hafta-N.js` kopyaları; hafta kapanınca `tnba-data.js` arşive kopyalanıp manifeste satır eklenir.
 
-## Logo Slotları (image-slot.js)
+## Takım Logoları — tnba-logo-fx.js (ZORUNLU İŞLEME)
+18 takım logosu `assets/teams/XX.(png|jpg)` altında; yolları `tnba-data.js` → `TEAMS[takım][2]`.
+Logolar **ham haliyle kullanılmaz**. Her ekran `tnba-logo-fx.js` → `processTeams(TEAMS)` ile işlenmiş kopyayı kullanır:
+- Kenardan flood-fill ile beyaz/krem zemin tamamen şeffaf yapılır (logo sayfa zeminine oturur, kare kutu yok).
+- Zemin sınırındaki açık kenar pikselleri yumuşak alfa ile inceltilir.
+- Tüm logoya radyal kenar yumuşatması uygulanır (yarıçapın %80'inden %100'üne smoothstep) — koyu zeminli kare logoların köşeleri daireye doğru erir.
+- Çıktı 320×320 PNG data-URL, önbelleklenir. Logolar `object-fit:contain` ile, çerçevesiz ve kutusuz yerleştirilir.
+Yeni/değişen logo: dosyayı `assets/teams/`'e koy, `TEAMS` yolunu güncelle — işleme otomatik.
+**PNG otomasyonunda:** logolar sayfa açıldıktan sonra asenkron işlenir; yakalamadan önce tüm logo `<img>`'lerinin `data:image/png` src'ye geçmesini bekleyin:
+```js
+await page.waitForFunction(() => [...document.querySelectorAll('[data-screen-label] img')].filter(i => /assets\/teams/.test(i.src)).length === 0);
+```
+
+## Logo Slotları (image-slot.js) — eski yedek
 Tüm takım rozetleri `<image-slot id="tl-XX">` alanıdır (XX = monogram). Gerçek logo bir kez bırakıldığında `.image-slots.state.json` sidecar dosyasına kaydedilir ve aynı id'li tüm ekranlarda görünür. Sidecar, HTML dosyalarının YANINDA durur — PNG otomasyonunda bu dosya varsa korunmalı. Boş slotlar monogram gösterir (tasarım bozulmaz).
 
 ## PNG Otomasyonu (hedef iş)
@@ -49,9 +68,10 @@ const page = await browser.newPage({ deviceScaleFactor: 2 });
 await page.goto('http://localhost:8000/T-NBA%202026-27%20Puan%20Durumu.dc.html');
 await page.waitForFunction(() => document.fonts.status === 'loaded');
 await page.waitForTimeout(1200); // veri import + render
+await page.waitForFunction(() => [...document.querySelectorAll('img')].every(i => !/assets\/teams/.test(i.src))); // logo işleme bitti
 await page.locator('[data-screen-label]').screenshot({ path: 'out/puan-durumu.png' });
 ```
-Beş haftalık ekran + şampiyonlar sayfası için döngü yeterli. Çıktı: 2160×3840 PNG.
+Beş haftalık ekran + şampiyonlar + draft sırası + 6 adet 101 kartı için döngü yeterli (101 dosyasında her kart ayrı `[data-screen-label]`; tümünü `page.locator('[data-screen-label]').nth(i)` ile yakalayın). Çıktı: 2160×3840 PNG.
 
 ## Design Tokens
 **2026-27 set:** bg `#f3f2f2` · ink `#201e1d` · kırmızı `#ec3013` · kart `#fbfaf9` · çizgiler `rgba(32,30,29,.14/.22)` · font Archivo (200-900) · başlık 136/900 · gövde 24-28/600-800 · radius 0.

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/modernist-785da292-216d-47a9-800f-8e6c4680f25f/styles.css">
+<script src="_ds/modernist-785da292-216d-47a9-800f-8e6c4680f25f/_ds_bundle.js"></script>
+<style>body{margin:0;background:#dbd9d5} a{color:#ec3013;text-decoration:none} a:hover{color:#a02613}</style>
+</helmet>
+<div style="display:flex;gap:48px;padding:48px;align-items:flex-start;font-family:var(--font-body,'Archivo',sans-serif)">
+  <div data-screen-label="101 Kapak" style="width:1080px;height:1920px;box-sizing:border-box;position:relative;overflow:hidden;background:var(--color-bg,#f3f2f2);color:var(--color-text,#201e1d);display:flex;flex-direction:column;padding:56px 64px 44px;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:22px;padding-bottom:22px;border-bottom:2px solid var(--color-text,#201e1d)">
+      <img src="assets/tnba-logo-pro.png" alt="T-NBA" style="width:72px;height:72px"></img>
+      <div style="font-size:27px;font-weight:900;letter-spacing:0.1em;white-space:nowrap">T-NBA CHAMPIONSHIP</div>
+      <div style="margin-left:auto;background:var(--color-accent,#ec3013);color:#fff;font-size:16px;font-weight:800;letter-spacing:0.18em;padding:10px 18px;white-space:nowrap">2026-27 SEZONU</div>
+    </div>
+    <div style="padding:60px 0 40px;border-bottom:2px solid var(--color-text,#201e1d)">
+      <div style="font-size:21px;font-weight:800;letter-spacing:0.28em;color:var(--color-accent,#ec3013)">LİG REHBERİ</div>
+      <div style="margin-top:22px;font-size:172px;font-weight:900;line-height:1.02;letter-spacing:-0.01em">T-NBA'E<br>GİRİŞ:<br>101</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:2px solid var(--color-text,#201e1d)">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+        <div style="padding:26px 16px 26px 0;border-right:1px solid rgba(32,30,29,0.18)">
+          <div style="font-size:64px;font-weight:900;line-height:1">{{ s.v }}</div>
+          <div style="margin-top:10px;font-size:13px;font-weight:800;letter-spacing:0.18em;color:rgba(32,30,29,0.6);white-space:nowrap">{{ s.l }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:0">
+      <sc-for list="{{ toc }}" as="t" hint-placeholder-count="5">
+        <div style="display:flex;align-items:baseline;gap:22px;padding:20px 0;border-bottom:1px solid rgba(32,30,29,0.14)">
+          <div style="font-size:30px;font-weight:900;color:var(--color-accent,#ec3013);width:60px">{{ t.n }}</div>
+          <div style="font-size:34px;font-weight:800;letter-spacing:0.02em;white-space:nowrap">{{ t.l }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="background:var(--color-accent,#ec3013);color:#fff;padding:26px 28px">
+      <div style="font-size:38px;font-weight:900;line-height:1.05">Draft gecesi: 16 Ekim Cuma, 22.00</div>
+      <div style="margin-top:10px;font-size:14px;font-weight:800;letter-spacing:0.2em;color:rgba(255,255,255,0.85)">SEZON BAŞLANGICI · 26 EKİM PAZARTESİ</div>
+    </div>
+    <div style="margin-top:20px;display:flex;justify-content:space-between;padding-top:16px;border-top:2px solid var(--color-text,#201e1d);font-size:15px;font-weight:700;letter-spacing:0.22em;color:rgba(32,30,29,0.55)">
+      <div style="white-space:nowrap">T-NBA CHAMPIONSHIP</div><div style="white-space:nowrap">1 / 6</div>
+    </div>
+  </div>
+  <sc-for list="{{ sections }}" as="sec" hint-placeholder-count="5">
+    <div data-screen-label="101 {{ sec.n }}" style="width:1080px;height:1920px;box-sizing:border-box;position:relative;overflow:hidden;background:var(--color-bg,#f3f2f2);color:var(--color-text,#201e1d);display:flex;flex-direction:column;padding:56px 64px 44px;flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:22px;padding-bottom:22px;border-bottom:2px solid var(--color-text,#201e1d)">
+        <img src="assets/tnba-logo-pro.png" alt="T-NBA" style="width:72px;height:72px"></img>
+        <div style="font-size:27px;font-weight:900;letter-spacing:0.1em;white-space:nowrap">T-NBA'E GİRİŞ: 101</div>
+        <div style="margin-left:auto;background:var(--color-accent,#ec3013);color:#fff;font-size:16px;font-weight:800;letter-spacing:0.18em;padding:10px 18px;white-space:nowrap">2026-27 SEZONU</div>
+      </div>
+      <div style="padding:30px 0 0;border-bottom:2px solid var(--color-text,#201e1d)">
+        <div style="font-size:24px;font-weight:900;letter-spacing:0.3em;color:var(--color-accent,#ec3013)">BÖLÜM {{ sec.n }}</div>
+        <div style="margin-top:14px;padding-bottom:26px;font-size:{{ sec.titleSize }}px;font-weight:900;line-height:1.1;letter-spacing:-0.01em;white-space:nowrap">{{ sec.title }}</div>
+      </div>
+      <div style="margin-top:22px;display:grid;grid-template-columns:repeat({{ sec.leadCols }},1fr);gap:12px">
+        <sc-for list="{{ sec.lead }}" as="k" hint-placeholder-count="3">
+          <div style="background:#fbfaf9;border:1px solid rgba(32,30,29,0.22);padding:16px 18px;min-width:0">
+            <div style="font-size:12px;font-weight:800;letter-spacing:0.18em;color:rgba(32,30,29,0.6);white-space:nowrap">{{ k.l }}</div>
+            <div style="margin-top:8px;font-size:30px;font-weight:900;line-height:1.1;text-wrap:pretty">{{ k.v }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="flex:1;margin-top:26px;display:flex;flex-direction:column;justify-content:flex-start">
+        <sc-for list="{{ sec.items }}" as="it" hint-placeholder-count="4">
+          <div style="display:grid;grid-template-columns:22px 1fr;gap:16px;padding:{{ sec.itemPad }}px 0;border-bottom:1px solid rgba(32,30,29,0.14);font-size:{{ sec.bodySize }}px;line-height:1.45;text-wrap:pretty">
+            <div style="margin-top:10px;width:9px;height:9px;background:var(--color-text,#201e1d)"></div>
+            <div>{{ it }}</div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ sec.hasTable }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:30px;display:grid;grid-template-columns:1fr 1fr;column-gap:32px;border-top:2px solid var(--color-text,#201e1d)">
+            <sc-for list="{{ sec.table }}" as="r" hint-placeholder-count="9">
+              <div style="display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:baseline;padding:17px 0;border-bottom:1px solid rgba(32,30,29,0.14)">
+                <div style="font-size:25px;font-weight:900;letter-spacing:0.04em">{{ r.k }}</div>
+                <div style="font-size:21px;line-height:1.4;color:rgba(32,30,29,0.8);text-wrap:pretty">{{ r.v }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ sec.hasWarn }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:30px;display:grid;grid-template-columns:8px 1fr;gap:18px;background:#fbfaf9;border:1px solid rgba(32,30,29,0.22)">
+            <div style="background:var(--color-accent,#ec3013)"></div>
+            <div style="padding:20px 22px 20px 0">
+              <div style="font-size:12px;font-weight:800;letter-spacing:0.22em;color:var(--color-accent,#ec3013)">DİKKAT</div>
+              <div style="margin-top:8px;font-size:24px;line-height:1.45;text-wrap:pretty">{{ sec.warn }}</div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <div style="margin-top:20px;display:flex;justify-content:space-between;padding-top:16px;border-top:2px solid var(--color-text,#201e1d);font-size:15px;font-weight:700;letter-spacing:0.22em;color:rgba(32,30,29,0.55)">
+        <div style="white-space:nowrap">T-NBA CHAMPIONSHIP</div><div style="white-space:nowrap">{{ sec.page }} / 6</div>
+      </div>
+    </div>
+  </sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const stats = [{ v: "18", l: "TAKIM" }, { v: "12", l: "OYUNCU / KADRO" }, { v: "11", l: "KATEGORİ" }, { v: "17", l: "HAFTA" }];
+    const S = [
+      { n: "01", title: "Draft", titleSize: 110, bodySize: 34, itemPad: 46,
+        lead: [{ l: "TARİH", v: "16 Ekim 2026 Cuma" }, { l: "SAAT", v: "22.00" }, { l: "SIRA SÜRESİ", v: "1 dakika" }],
+        items: [
+          "Draft canlı olarak gerçekleştirilir; Yahoo! Fantasy mobil uygulaması veya web sitesinden katılım sağlanır.",
+          "Seçimler simetrik (snake) ilerler: … 16-17-18-18-17-16 … şeklinde.",
+          "Her sıranın süresi 1 dakikadır. Süre içinde seçim yapılmazsa sistem yapay zekâ ile otomatik seçim yapar.",
+          "Her takım toplam 12 oyuncu seçerek kadrosunu kurar.",
+          "Draft mecburi veya isteğe bağlı olarak sisteme bırakılabilir; yapay zekâ o an kadro için en doğru ve eksik pozisyondaki oyuncuyu seçer."
+        ] },
+      { n: "02", title: "Takım Kadrosu", titleSize: 100, bodySize: 29, itemPad: 34,
+        lead: [{ l: "KADRO", v: "12 oyuncu" }, { l: "IL KONTENJANI", v: "+2" }, { l: "KADRO SEÇİMİ", v: "Haftalık" }],
+        items: [
+          "INJ ibareli oyuncular IL listesine gönderilerek havuzdan boşta bir oyuncu kadroya alınabilir. Sakatlık geçince IL'deki oyuncu listeden çıkarılmalı veya boşa bırakılmalıdır.",
+          "Yeni hafta başlarken (Pazar akşamı / en geç Pazartesi sabahı) \"Start Active Players\" → \"Okay\" ile haftalık kadro otomatik ayarlanır; istenirse bir oyuncu manuel olarak bench'e alınabilir. Hatırlatmalar her Pazartesi WhatsApp grubundan duyurulur."
+        ],
+        table: [
+          { k: "PG", v: "Point Guard" }, { k: "SG", v: "Shooting Guard" },
+          { k: "G", v: "Guard — PG ve/veya SG" }, { k: "SF", v: "Small Forward" },
+          { k: "PF", v: "Power Forward" }, { k: "F", v: "Forward — SF ve/veya PF" },
+          { k: "C", v: "Center" }, { k: "UTIL", v: "Herhangi bir pozisyon" },
+          { k: "BN", v: "Bench — o gün maçı olmayanlar" }
+        ],
+        warn: "Sakat (IR/IL/DL/NA) oyuncular doğrudan injury slot'a eklenemez. Önce kadrodan bir oyuncu drop edilir; ardından sakat oyuncu injury slot'a yerleştirilir." },
+      { n: "03", title: "Kategoriler ve Lig Tablosu", titleSize: 68, bodySize: 28, itemPad: 30,
+        lead: [{ l: "HER HAFTA", v: "9 eşleşme" }, { l: "YARIŞ", v: "11 kategori" }, { l: "PLAYOFF", v: "İlk 8 takım" }],
+        items: [
+          "Her takım bir hafta boyunca aynı rakibiyle istatistik yarışındadır. 10 kategoride yüksek, top kaybında (TO) düşük istatistik kazanır. Yüzdelik kategorilerde ortalama, adet kategorilerinde toplam alınır.",
+          "Kategoride beraberlik olabilir; tabloya beraberlik olarak işlenir: 6 kazanılan, 4 kaybedilen, 1 berabere → 6-4-1. Haftalar toplanır: 7-4 ve 5-5-1 → 12-9-1.",
+          "Hafta sonucu Pazartesi sabahı belli olur. Normal sezon sonunda ilk 8 takım şampiyonluk play-off'u oynar (NBA play-off'u ile eş zamanlı değildir)."
+        ],
+        table: [
+          { k: "FG%", v: "Saha içi şut yüzdesi" }, { k: "FT%", v: "Serbest atış yüzdesi" },
+          { k: "3PTM", v: "3 sayı isabeti" }, { k: "PTS", v: "Sayı" }, { k: "AST", v: "Asist" },
+          { k: "OREB", v: "Ofansif ribaund" }, { k: "DREB", v: "Defansif ribaund" }, { k: "ST", v: "Top çalma" },
+          { k: "BLK", v: "Blok" }, { k: "TO", v: "Top kaybı — düşük kazanır" }, { k: "A/T", v: "Asist / top kaybı oranı" }
+        ],
+        warn: "Fikstürün 17 hafta (tek tam tur) tamamlanabilmesi için T-NBA sezonu NBA'den farklı olarak 26 Ekim Pazartesi başlar." },
+      { n: "04", title: "Takas", titleSize: 110, bodySize: 34, itemPad: 48,
+        lead: [{ l: "ANKET SÜRESİ", v: "24 saat" }, { l: "MİNİMUM EVET", v: "7 oy" }, { l: "EŞİTLİK", v: "Takas olmaz" }],
+        items: [
+          "İki tarafın onayladığı takas lig gündemine anket olarak düşer ve diğer menajerlerin onayına sunulur. Çoğunluk onaylarsa gerçekleşir; çoğunluk veto ederse gerçekleşmez.",
+          "Menajerler anket yayınlandıktan sonraki 24 saat içinde oy kullanmalıdır.",
+          "Takası yapan menajerler oy kullanamaz; kullanırlarsa oyları geçersiz sayılır.",
+          "Eşitlik durumunda (7-7, 8-8 vb.) takas gerçekleşmez.",
+          "Yeterli oy kullanılmazsa takasın gerçekleşmesi için en az 7 evet oyu gerekir (6-5, 6-3 gibi sonuçlarda onaylanmaz)."
+        ] },
+      { n: "05", title: "Free Agent", titleSize: 110, bodySize: 40, itemPad: 70,
+        lead: [{ l: "BOŞTAKİ OYUNCU", v: "1 gün bekleme" }, { l: "YENİ BIRAKILAN", v: "2 gün bekleme" }],
+        items: [
+          "Menajerler kadrolarında düşünmedikleri oyuncularını havuzdaki \"free agent\" oyuncularla değiştirebilir.",
+          "Drafttan sonra hiçbir takımca seçilmemiş ya da serbest bırakılması 2 günü geçmiş oyuncular için teklif bekleme süresi 1 gündür.",
+          "Yeni serbest bırakılmış oyuncuya yapılan teklif 2 gün bekletilir; bu sürede daha yüksek teklif gelmezse oyuncu en yüksek teklifi veren takıma geçer."
+        ] }
+    ];
+    const sections = S.map((s, i) => ({
+      ...s, page: i + 2, leadCols: s.lead.length,
+      hasTable: !!s.table, table: s.table || [],
+      hasWarn: !!s.warn, warn: s.warn || ""
+    }));
+    const toc = S.map(s => ({ n: s.n, l: s.title.toUpperCase() }));
+    return { stats, sections, toc };
+  }
+}
+</script>
+</body>
+</html>

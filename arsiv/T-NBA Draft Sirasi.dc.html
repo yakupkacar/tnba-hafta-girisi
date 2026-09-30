@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-785da292-216d-47a9-800f-8e6c4680f25f/styles.css">
+<script src="_ds/modernist-785da292-216d-47a9-800f-8e6c4680f25f/_ds_bundle.js"></script>
+<style>body{margin:0;background:#dbd9d5} a{color:#ec3013;text-decoration:none} a:hover{color:#a02613}</style>
+</helmet>
+<div style="display:flex;justify-content:center;padding:48px;font-family:var(--font-body,'Archivo',sans-serif)">
+  <div data-screen-label="Draft Sirasi" style="width:1080px;height:1920px;box-sizing:border-box;position:relative;overflow:hidden;background:var(--color-bg,#f3f2f2);color:var(--color-text,#201e1d);display:flex;flex-direction:column;padding:56px 64px 44px;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:22px;padding-bottom:24px;border-bottom:1px solid var(--color-text,#201e1d)">
+      <img src="assets/tnba-logo-pro.png" alt="T-NBA" style="width:60px;height:60px"></img>
+      <div style="font-size:19px;font-weight:700;letter-spacing:0.22em;white-space:nowrap">T-NBA CHAMPIONSHIP</div>
+      <div style="margin-left:auto;font-size:14px;font-weight:600;letter-spacing:0.26em;color:var(--color-accent,#ec3013);white-space:nowrap">2026-27 SEZONU</div>
+    </div>
+    <div style="padding:64px 0 48px">
+      <div style="font-size:96px;font-weight:700;line-height:1;letter-spacing:-0.025em;white-space:nowrap">Draft Sırası</div>
+      <div style="margin-top:22px;font-size:15px;font-weight:600;letter-spacing:0.3em;color:rgba(32,30,29,0.55)">16 EKİM CUMA · 22.00 · SNAKE DRAFT</div>
+    </div>
+    <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;column-gap:56px;border-top:1px solid var(--color-text,#201e1d)">
+      <sc-for list="{{ cols }}" as="col" hint-placeholder-count="2">
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ col }}" as="p" hint-placeholder-count="9">
+            <div style="flex:1;display:grid;grid-template-columns:40px 84px minmax(0,1fr);column-gap:18px;align-items:center;border-bottom:1px solid rgba(32,30,29,0.1)">
+              <sc-if value="{{ p.first }}" hint-placeholder-val="{{ false }}"><div style="font-family:var(--font-heading,'Archivo',sans-serif);font-size:24px;font-weight:700;letter-spacing:-0.02em;line-height:1;color:var(--color-accent,#ec3013);font-variant-numeric:tabular-nums">{{ p.n }}</div></sc-if>
+              <sc-if value="{{ p.rest }}" hint-placeholder-val="{{ true }}"><div style="font-family:var(--font-heading,'Archivo',sans-serif);font-size:24px;font-weight:700;letter-spacing:-0.02em;line-height:1;color:rgba(32,30,29,0.3);font-variant-numeric:tabular-nums">{{ p.n }}</div></sc-if>
+              <img src="{{ p.fg }}" alt="{{ p.team }}" style="width:84px;height:84px;display:block;object-fit:contain"></img>
+              <div style="font-family:var(--font-heading,'Archivo',sans-serif);font-size:25px;font-weight:700;line-height:1.15;letter-spacing:-0.02em;text-wrap:balance">{{ p.team }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:40px;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--color-text,#201e1d)">
+      <div style="padding:18px 0">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.24em;color:rgba(32,30,29,0.5)">TUR 1</div>
+        <div style="margin-top:6px;font-size:21px;font-weight:700;letter-spacing:-0.02em">1 → 18</div>
+      </div>
+      <div style="padding:18px 0 18px 22px;border-left:1px solid rgba(32,30,29,0.12)">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.24em;color:rgba(32,30,29,0.5)">TUR 2</div>
+        <div style="margin-top:6px;font-size:21px;font-weight:700;letter-spacing:-0.02em">18 → 1</div>
+      </div>
+      <div style="padding:18px 0 18px 22px;border-left:1px solid rgba(32,30,29,0.12)">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.24em;color:rgba(32,30,29,0.5)">TOPLAM</div>
+        <div style="margin-top:6px;font-size:21px;font-weight:700;letter-spacing:-0.02em;white-space:nowrap">12 tur · 216 seçim</div>
+      </div>
+    </div>
+    <div style="margin-top:28px;display:flex;justify-content:space-between;font-size:12px;font-weight:600;letter-spacing:0.26em;color:rgba(32,30,29,0.45)">
+      <div style="white-space:nowrap">T-NBA CHAMPIONSHIP</div><div style="white-space:nowrap">SIRA BAŞINA 1 DAKİKA</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { d: null, art: {} };
+  componentDidMount() {
+    import('./tnba-data.js').then(m => {
+      this.setState({ d: m });
+      Object.values(m.TEAMS).forEach(t => this.process(t[0], t[2]));
+    });
+  }
+  load(src) {
+    return new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
+  }
+  async process(key, src) {
+    if (!src) return;
+    let img;
+    try { img = await this.load(src); } catch (e) { return; }
+    const S = 320;
+    const c = document.createElement('canvas'); c.width = S; c.height = S;
+    const x = c.getContext('2d');
+    const r = Math.min(S / img.naturalWidth, S / img.naturalHeight);
+    const w = img.naturalWidth * r, h = img.naturalHeight * r;
+    x.drawImage(img, (S - w) / 2, (S - h) / 2, w, h);
+    const id = x.getImageData(0, 0, S, S), p = id.data;
+    const lum = i => Math.min(p[i], p[i + 1], p[i + 2]);
+    const flat = i => Math.max(p[i], p[i + 1], p[i + 2]) - Math.min(p[i], p[i + 1], p[i + 2]) < 42;
+    const light = i => lum(i) > 196 && flat(i);
+    const filled = new Uint8Array(S * S), seen = new Uint8Array(S * S), q = [];
+    for (let k = 0; k < S; k++) { q.push(k, (S - 1) * S + k, k * S, k * S + S - 1); }
+    while (q.length) {
+      const n = q.pop(); if (seen[n]) continue; seen[n] = 1;
+      if (!light(n * 4)) continue;
+      filled[n] = 1;
+      const px = n % S, py = (n / S) | 0;
+      if (px > 0) q.push(n - 1); if (px < S - 1) q.push(n + 1);
+      if (py > 0) q.push(n - S); if (py < S - 1) q.push(n + S);
+    }
+    const R = S / 2;
+    const ss = (a, b, v) => { const t = Math.min(1, Math.max(0, (v - a) / (b - a))); return t * t * (3 - 2 * t); };
+    for (let n = 0; n < S * S; n++) {
+      const i = n * 4;
+      if (filled[n]) { p[i + 3] = 0; continue; }
+      const px = n % S, py = (n / S) | 0;
+      const edge = (px > 0 && filled[n - 1]) || (px < S - 1 && filled[n + 1]) || (py > 0 && filled[n - S]) || (py < S - 1 && filled[n + S]);
+      if (edge && flat(i) && lum(i) > 140) p[i + 3] = Math.round(p[i + 3] * (1 - (lum(i) - 140) / 115));
+      const d = Math.hypot(px - R + 0.5, py - R + 0.5) / R;
+      p[i + 3] = Math.round(p[i + 3] * (1 - ss(0.8, 1.0, d)));
+    }
+    x.putImageData(id, 0, 0);
+    const art = { fg: c.toDataURL('image/png') };
+    this.setState(s => ({ art: { ...s.art, [key]: art } }));
+  }
+  renderVals() {
+    const ORDER = ["Wildcats", "Rhizus Hawks", "Eagles", "Giresun Hazelnuts", "God's Wrath", "Ottoman", "Dağsu Bears", "Kaplıca Gunslingers", "Sultan Selim Suns", "Peripol Hornets", "Borçka Bulls", "Wild Butterfli's", "Cardinals", "Phoenix Ashes", "San Andon Spurs", "Dosma's Crazy Horses", "Sin City Wolves", "Ventolins"];
+    const T = (this.state.d && this.state.d.TEAMS) || {};
+    const picks = ORDER.map((team, i) => {
+      const t = T[team] || [];
+      const a = this.state.art[t[0]] || {};
+      return {
+        n: String(i + 1).padStart(2, "0"), team,
+        c: t[1] || "rgba(255,255,255,0.3)",
+        fg: a.fg || "",
+        first: i === 0, rest: i !== 0
+      };
+    });
+    return { cols: [picks.slice(0, 9), picks.slice(9)] };
+  }
+}
+</script>
+</body>
+</html>

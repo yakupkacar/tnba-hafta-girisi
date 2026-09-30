@@ -51,7 +51,7 @@ function Piece() {
   return React.createElement('div', { style: { position: 'absolute', inset: 0, background: BG, color: INK, fontFamily: FONT, overflow: 'hidden', opacity: rootOp } },
     // kalıcı başlık
     React.createElement('div', { style: { opacity: headerFade } },
-      React.createElement('img', { src: 'assets/tnba-logo.png', style: { position: 'absolute', left: logoX, top: logoY, width: logoSize, height: logoSize, borderRadius: '50%', boxShadow: `0 0 0 2px ${INK}`, transform: `scale(${logoPop})` } }),
+      React.createElement('img', { src: 'assets/tnba-logo-pro.png', style: { position: 'absolute', left: logoX, top: logoY, width: logoSize, height: logoSize, borderRadius: '50%', boxShadow: `0 0 0 2px ${INK}`, transform: `scale(${logoPop})` } }),
       React.createElement('div', { style: { position: 'absolute', left: titleX, top: titleY, fontSize: titleFs, fontWeight: 900, letterSpacing: '0.08em', whiteSpace: 'nowrap', opacity: clamp(logoPop, 0, 1) } }, 'T-NBA CHAMPIONSHIP'),
       React.createElement('div', { style: { position: 'absolute', left: tagX, top: tagY, background: RED, color: '#fff', fontSize: 15, fontWeight: 800, letterSpacing: '0.18em', padding: '9px 16px', whiteSpace: 'nowrap', transform: `scale(${tagPop})` } }, '2026-27 SEZONU'),
       React.createElement('div', { style: { position: 'absolute', left: 64, top: 140, width: 952, height: 2, background: INK, transform: `scaleX(${ruleW})`, transformOrigin: 'left' } })
@@ -78,18 +78,25 @@ function Piece() {
         })
       )
     ),
-    // İlk 3
+    // Puan durumu — 18 takım
     React.createElement(Shot, { from: CUES.Ilk3 - 0.2, to: CUES.Enler + 0.4 },
-      kicker('PUAN DURUMU — İLK 3', CUES.Ilk3 + 0.1),
-      React.createElement('div', { style: { position: 'absolute', left: 64, right: 64, top: 300, opacity: MO.fade(CUES.Enler - 0.5)(T) } },
-        S.slice(0, 3).map((s, i) => {
-          const at = CUES.Ilk3 + 0.35 + i * 0.4;
-          const e = MO.enter(at)(T);
-          return React.createElement('div', { key: i, style: { display: 'flex', alignItems: 'center', gap: 40, height: 300, borderBottom: '2px solid ' + INK, opacity: e.opacity, transform: `translateY(${e.y}px)` } },
-            React.createElement('div', { style: { fontSize: 170, fontWeight: 900, width: 150, color: i === 0 ? RED : INK } }, s.r),
-            React.createElement('div', null,
-              React.createElement('div', { style: { fontSize: 52, fontWeight: 900, whiteSpace: 'nowrap' } }, s.n),
-              React.createElement('div', { style: { marginTop: 14, fontSize: 30, fontWeight: 800, color: DIM, letterSpacing: '0.08em' } }, s.rec)
+      kicker('PUAN DURUMU', CUES.Ilk3 + 0.1),
+      React.createElement('div', { style: { position: 'absolute', left: 64, right: 64, top: 232, opacity: MO.fade(CUES.Enler - 0.5)(T), transform: `translateY(${animate({ from: 18, to: -26, start: CUES.Ilk3 + 0.4, end: CUES.Enler - 0.4 })(T)}px)` } },
+        S.map((s, i) => {
+          const at = CUES.Ilk3 + 0.2 + i * 0.11;
+          const e = MO.enter(at, 0.45)(T);
+          const row = React.createElement('div', { key: 'r' + i, style: { display: 'grid', gridTemplateColumns: '64px 1fr auto', alignItems: 'center', columnGap: 18, height: 76, borderBottom: '1px solid rgba(32,30,29,0.14)', opacity: e.opacity, transform: `translateY(${e.y}px)` } },
+            React.createElement('div', { style: { fontSize: 32, fontWeight: 900, color: s.r <= 3 ? RED : 'rgba(32,30,29,0.45)' } }, s.r),
+            React.createElement('div', { style: { fontSize: 30, fontWeight: s.r <= 8 ? 800 : 600, whiteSpace: 'nowrap', overflow: 'hidden', color: s.r <= 8 ? INK : 'rgba(32,30,29,0.55)' } }, s.n),
+            React.createElement('div', { style: { fontSize: 24, fontWeight: 800, color: DIM, fontVariantNumeric: 'tabular-nums', letterSpacing: '0.04em' } }, s.rec)
+          );
+          if (s.r !== 8) return row;
+          const de = MO.enter(at + 0.2, 0.45)(T);
+          const pulse = 0.75 + 0.25 * Math.sin((T - CUES.Ilk3) * 2.4);
+          return React.createElement('div', { key: 'w' + i }, row,
+            React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 14, height: 34, opacity: de.opacity } },
+              React.createElement('div', { style: { fontSize: 13, fontWeight: 900, letterSpacing: '0.3em', color: RED, whiteSpace: 'nowrap' } }, 'PLAYOFF SINIRI'),
+              React.createElement('div', { style: { flex: 1, height: 2, background: RED, opacity: pulse } })
             )
           );
         })
@@ -98,17 +105,17 @@ function Piece() {
     // En'ler
     React.createElement(Shot, { from: CUES.Enler - 0.2, to: CUES.Kapanis + 0.3 },
       kicker("HAFTANIN EN'LERİ", CUES.Enler + 0.1),
-      React.createElement('div', { style: { position: 'absolute', left: 64, right: 64, top: 320, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, opacity: MO.fade(CUES.Kapanis - 0.45)(T) } },
-        [L[3], L[2], L[6], L[8]].map((c, i) => {
-          const at = CUES.Enler + 0.3 + i * 0.35;
-          const e = MO.enter(at)(T);
+      React.createElement('div', { style: { position: 'absolute', left: 64, right: 64, top: 236, opacity: MO.fade(CUES.Kapanis - 0.45)(T) } },
+        L.map((c, i) => {
+          const at = CUES.Enler + 0.25 + i * 0.28;
+          const e = MO.enter(at, 0.5)(T);
           const num = parseFloat(c[2]);
           const isInt = /^\d+$/.test(c[2]);
-          const shown = isInt ? Math.round(num * clamp(animate({ from: 0, to: 1, start: at, end: at + 0.9, ease: Easing.easeOutCubic })(T), 0, 1)) : c[2];
-          return React.createElement('div', { key: i, style: { borderTop: '2px solid ' + INK, paddingTop: 22, opacity: e.opacity, transform: `translateY(${e.y}px)` } },
-            React.createElement('div', { style: { fontSize: 22, fontWeight: 800, letterSpacing: '0.2em', color: RED } }, c[0]),
-            React.createElement('div', { style: { fontSize: 110, fontWeight: 900, lineHeight: 1.05, fontVariantNumeric: 'tabular-nums' } }, shown),
-            React.createElement('div', { style: { fontSize: 24, fontWeight: 700, color: DIM, whiteSpace: 'nowrap' } }, c[3])
+          const shown = isInt ? Math.round(num * clamp(animate({ from: 0, to: 1, start: at, end: at + 0.7, ease: Easing.easeOutCubic })(T), 0, 1)) : c[2];
+          return React.createElement('div', { key: i, style: { display: 'grid', gridTemplateColumns: '150px 1fr auto', alignItems: 'center', columnGap: 24, height: 132, borderBottom: '1px solid rgba(32,30,29,0.14)', opacity: e.opacity, transform: `translateY(${e.y}px)` } },
+            React.createElement('div', { style: { fontSize: 30, fontWeight: 900, letterSpacing: '0.06em', color: RED } }, c[0]),
+            React.createElement('div', { style: { fontSize: 66, fontWeight: 900, fontVariantNumeric: 'tabular-nums' } }, shown),
+            React.createElement('div', { style: { fontSize: 26, fontWeight: 700, color: DIM, whiteSpace: 'nowrap', textAlign: 'right' } }, c[3])
           );
         })
       )
@@ -116,7 +123,7 @@ function Piece() {
     // Kapanış
     React.createElement(Shot, { from: CUES.Kapanis - 0.1, to: 999 },
       React.createElement('div', { style: { position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 36 } },
-        React.createElement('img', { src: 'assets/tnba-logo.png', style: { width: 190, height: 190, borderRadius: '50%', boxShadow: `0 0 0 2px ${INK}`, transform: `scale(${MO.pop(CUES.Kapanis + 0.1)(T)})` } }),
+        React.createElement('img', { src: 'assets/tnba-logo-pro.png', style: { width: 190, height: 190, borderRadius: '50%', boxShadow: `0 0 0 2px ${INK}`, transform: `scale(${MO.pop(CUES.Kapanis + 0.1)(T)})` } }),
         React.createElement('div', { style: { fontSize: 46, fontWeight: 900, letterSpacing: '0.1em', opacity: MO.enter(CUES.Kapanis + 0.4)(T).opacity } }, 'SIRADAKİ: ' + nextHafta + '. HAFTA'),
         React.createElement('div', { style: { background: RED, color: '#fff', fontSize: 19, fontWeight: 800, letterSpacing: '0.22em', padding: '12px 24px', opacity: MO.enter(CUES.Kapanis + 0.65)(T).opacity } }, 'T-NBA CHAMPIONSHIP · 2026-27')
       )
