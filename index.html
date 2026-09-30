@@ -1,0 +1,485 @@
+<title>T-NBA Hafta Girişi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&display=swap">
+<style>
+/* Layout: tek sütun form, T-NBA 2026-27 görsel dili (Archivo, mürekkep çizgiler, sıfır radius, tek kırmızı vurgu) */
+:root{
+  --bg:#f3f2f2; --card:#fbfaf9; --ink:#201e1d; --line:rgba(32,30,29,.18);
+  --line-strong:#201e1d; --accent:#ec3013; --muted:rgba(32,30,29,.55); --ok:#1f7a3f;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#181716; --card:#232120; --ink:#f0eeec; --line:rgba(240,238,236,.2);
+  --line-strong:#f0eeec; --accent:#ff4a2d; --muted:rgba(240,238,236,.55); --ok:#4fbf78; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#181716; --card:#232120; --ink:#f0eeec; --line:rgba(240,238,236,.2);
+  --line-strong:#f0eeec; --accent:#ff4a2d; --muted:rgba(240,238,236,.55); --ok:#4fbf78; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font-family:'Archivo',-apple-system,sans-serif;
+  margin:0; padding-block:0 60px; padding-inline:16px}
+.wrap{max-width:860px; margin:0 auto}
+header{display:flex; align-items:center; gap:14px; padding:26px 0 18px; border-bottom:2px solid var(--line-strong); flex-wrap:wrap}
+header .brand{font-size:19px; font-weight:900; letter-spacing:.1em}
+header .tag{margin-left:auto; background:var(--accent); color:#fff; font-size:12px; font-weight:800; letter-spacing:.16em; padding:7px 12px}
+h1{font-size:clamp(38px,8vw,64px); font-weight:900; line-height:.95; letter-spacing:-.01em; margin:26px 0 6px; text-wrap:balance}
+.sub{color:var(--muted); font-size:15px; margin:0 0 26px; max-width:60ch}
+.adim{display:flex; gap:10px; align-items:baseline; margin:34px 0 12px; border-top:2px solid var(--line-strong); padding-top:14px}
+.adim .no{color:var(--accent); font-weight:900; font-size:15px; letter-spacing:.2em; white-space:nowrap}
+.adim h2{font-size:20px; font-weight:800; margin:0}
+.adim .opt{margin-left:auto; font-size:12px; font-weight:700; letter-spacing:.14em; color:var(--muted); white-space:nowrap}
+.hint{color:var(--muted); font-size:13.5px; margin:0 0 14px}
+label{font-size:12px; font-weight:800; letter-spacing:.14em; color:var(--muted); display:block; margin-bottom:5px; text-transform:uppercase}
+input,select{font-family:inherit; font-size:15px; font-weight:600; color:var(--ink);
+  background:var(--card); border:1.5px solid var(--line); border-radius:0; padding:9px 10px; width:100%}
+input:focus,select:focus{outline:2px solid var(--accent); outline-offset:-1px}
+input[type=number]{font-variant-numeric:tabular-nums; text-align:center}
+.rowtop{display:flex; gap:16px; align-items:end; flex-wrap:wrap; margin-bottom:8px}
+.rowtop .hafta{width:110px}
+.check{display:flex; gap:8px; align-items:center; font-size:14px; font-weight:600; padding-bottom:10px}
+.check input{width:18px; height:18px; accent-color:var(--accent)}
+.mac{display:grid; grid-template-columns:1fr 64px 24px 64px 1fr; gap:8px; align-items:center;
+  background:var(--card); border:1.5px solid var(--line); padding:12px; margin-bottom:10px}
+.mac .dash{text-align:center; color:var(--muted); font-weight:800}
+.mac.err{border-color:var(--accent)}
+.mac .win{outline:2px solid var(--ok); outline-offset:-2px}
+.durum{font-size:14px; font-weight:700; padding:10px 0}
+.durum.ok{color:var(--ok)} .durum.kotu{color:var(--accent)}
+.kat{display:grid; grid-template-columns:86px 1fr 110px; gap:8px; align-items:center; margin-bottom:8px}
+.kat .kod{font-weight:900; font-size:15px}
+.kat .kod small{display:block; font-size:10px; font-weight:700; letter-spacing:.08em; color:var(--muted)}
+.kat3{display:grid; grid-template-columns:86px 1fr 1fr 92px; gap:8px; align-items:center; margin-bottom:8px}
+.kat3 .kod{font-weight:900; font-size:15px}
+.kat3 .kod small{display:block; font-size:10px; font-weight:700; letter-spacing:.08em; color:var(--muted)}
+.fik{display:grid; grid-template-columns:1fr 24px 1fr; gap:8px; align-items:center; margin-bottom:8px}
+.fik .vs{text-align:center; font-weight:900; font-size:12px; color:var(--accent)}
+details{border:1.5px solid var(--line); background:var(--card); margin-bottom:14px}
+summary{cursor:pointer; padding:13px 14px; font-weight:800; font-size:15px; list-style:none; display:flex; gap:10px; align-items:center}
+summary::before{content:"+"; color:var(--accent); font-weight:900; font-size:18px; width:16px}
+details[open] summary::before{content:"–"}
+details .icerik{padding:4px 14px 14px}
+.uret{margin-top:36px; border-top:2px solid var(--line-strong); padding-top:18px}
+button{font-family:inherit; border-radius:0; cursor:pointer; font-weight:800; font-size:15px; letter-spacing:.04em}
+.birincil{background:var(--accent); color:#fff; border:none; padding:14px 22px; width:100%}
+.birincil:disabled{background:var(--muted); cursor:not-allowed}
+.ikincil{display:block; text-align:center; background:none; border:2px solid var(--line-strong); color:var(--ink);
+  padding:12px 22px; width:100%; text-decoration:none; font-weight:800; font-size:15px}
+.butonlar{display:grid; gap:10px; margin-top:14px}
+@media(min-width:640px){ .butonlar{grid-template-columns:1fr 1fr} }
+.sonuc{display:none; margin-top:16px}
+.sonuc.goster{display:block}
+.sonuc textarea{width:100%; height:150px; font:12px/1.5 ui-monospace,Menlo,monospace; color:var(--ink);
+  background:var(--card); border:1.5px solid var(--line); padding:10px; resize:vertical}
+.kopyalandi{color:var(--ok); font-weight:800; font-size:14px; padding-top:8px; min-height:22px}
+.talimat{background:var(--card); border-left:4px solid var(--accent); padding:14px 16px; margin-top:16px; font-size:14.5px; line-height:1.65}
+.talimat b{font-weight:800}
+footer{margin-top:44px; border-top:2px solid var(--line-strong); padding-top:12px; display:flex; justify-content:space-between;
+  font-size:11px; font-weight:800; letter-spacing:.18em; color:var(--muted)}
+.mod{display:flex; gap:9px; align-items:center; border:1.5px dashed var(--line); background:var(--card); padding:11px 14px; margin:0 0 16px}
+.mod input{width:18px; height:18px; accent-color:var(--accent)}
+.foto{border:2px solid var(--accent); background:var(--card); padding:14px 16px; margin:0 0 18px}
+.fotoBaslik{font-size:13px; font-weight:900; letter-spacing:.14em; color:var(--accent)}
+.fotoSatir{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+.fotoSatir input[type=file]{flex:1; min-width:200px; border:1.5px dashed var(--line); padding:8px; font-size:13px}
+.fotoBtn{width:auto; padding:11px 18px; font-size:13px; white-space:nowrap}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="brand">T-NBA CHAMPIONSHIP</div>
+  <div class="tag">HAFTALIK VERİ GİRİŞİ</div>
+</header>
+
+<h1>Hafta Girişi</h1>
+<p class="sub">Pazartesi sabahı Yahoo'daki Scoreboard'a bak, skorları buraya gir, en alttaki düğmeyle metni kopyala ve GitHub'a yapıştır. Puan durumu, form ve oklar otomatik hesaplanır — senin işin sadece bu sayfa.</p>
+
+<div class="adim"><span class="no">ADIM 1</span><h2>Hafta ve maç sonuçları</h2></div>
+<div class="mod">
+  <input type="checkbox" id="modFikstur">
+  <label for="modFikstur" style="margin:0; text-transform:none; font-size:14.5px; letter-spacing:0; font-weight:700">🗓 Sadece fikstür paylaşacağım (maç sonuçları henüz yok)</label>
+</div>
+<div class="rowtop" id="haftaSatiri">
+  <div class="hafta"><label for="hafta">Hafta No</label><input type="number" id="hafta" min="1" max="30" value=""></div>
+  <div class="check"><input type="checkbox" id="sezonbasi"><label for="sezonbasi" style="margin:0; text-transform:none; font-size:14px; letter-spacing:0">Bu, sezonun İLK haftası</label></div>
+</div>
+<div class="foto" id="fotoKutu" hidden>
+  <div class="fotoBaslik">📷 KISAYOL: FOTOĞRAFTAN DOLDUR</div>
+  <p class="hint" style="margin:6px 0 10px">Yahoo Scoreboard'un ekran görüntüsünü yükle — skorları Claude okuyup formu doldurur. Maçların <b>detay sayfalarının</b> (kategori tablolu) ss'lerini de yüklersen Haftanın En'leri bölümü de otomatik hesaplanıp dolar. Birden fazla görüntü seçebilirsin; hepsi bir kerede sığmazsa gruplar halinde yükle, okunanlar birikir.</p>
+  <div class="fotoSatir">
+    <input type="file" id="fotoSec" accept="image/*" multiple>
+    <button class="birincil fotoBtn" id="btnFoto">OKU VE DOLDUR</button>
+  </div>
+  <div class="durum" id="fotoDurum"></div>
+</div>
+<p class="hint" id="macHint">Her maçta iki takımı seç, kategori skorlarını yaz (toplam en fazla 11; 4-4 gibi eşit skor beraberliktir). Kazanan yeşil çerçeveyle işaretlenir.</p>
+<div id="maclar"></div>
+<div class="durum" id="macDurum"></div>
+
+<div class="adim"><span class="no">ADIM 2</span><h2>Ekstralar</h2><span class="opt">İSTEĞE BAĞLI</span></div>
+<p class="hint">Boş bırakılabilir — o zaman ilgili görsel boş çıkar, diğerleri tam üretilir.</p>
+
+<details id="dEnler"><summary>Haftanın En'leri (takım kategorileri)</summary><div class="icerik" id="enler"></div></details>
+<details id="dOyuncu"><summary>Oyuncu Liderleri</summary><div class="icerik">
+  <p class="hint" style="margin-top:8px">Yahoo → Players sekmesi → dönem filtresini "Last Week" yap, her kategoriye göre sırala, en üstteki oyuncuyu yaz.</p>
+  <div id="oyuncular"></div>
+</div></details>
+<details id="dFikstur"><summary>Gelecek haftanın fikstürü</summary><div class="icerik">
+  <div class="rowtop" style="margin-top:8px"><div class="hafta"><label for="fhafta">Fikstür Haftası</label><input type="number" id="fhafta" min="1" max="30"></div></div>
+  <div id="fikstur"></div>
+</div></details>
+
+<div class="uret">
+  <div class="adim" style="border:none; margin-top:0; padding-top:0"><span class="no">ADIM 3</span><h2>Kopyala ve GitHub'a yapıştır</h2></div>
+  <div class="butonlar">
+    <button class="birincil" id="btnKopyala">METNİ OLUŞTUR VE KOPYALA</button>
+    <a class="ikincil" href="https://github.com/yakupkacar/T-NBA/edit/main/girdi/hafta.js" target="_blank" rel="noopener">GITHUB'DA DOSYAYI AÇ ↗</a>
+  </div>
+  <div class="kopyalandi" id="kopyaMesaj"></div>
+  <div class="sonuc" id="sonuc">
+    <label for="cikti">Üretilen metin (kopyalanamadıysa elle seç-kopyala)</label>
+    <textarea id="cikti" readonly></textarea>
+  </div>
+  <div class="talimat">
+    <b>Sonrası şöyle:</b> GitHub'da açılan sayfada dosyanın içindeki her şeyi sil
+    (metin alanına tıkla → Ctrl/Cmd+A → sil), kopyaladığını yapıştır (Ctrl/Cmd+V)
+    ve sağ üstten <b>Commit changes</b> → tekrar <b>Commit changes</b> de.
+    2-3 dakika sonra görseller <b>output/hafta-N</b> klasöründe hazır olur.
+    (İlk seferde GitHub şifre sorabilir; Yakup'un davet ettiği hesabınla gir.)
+  </div>
+</div>
+
+<footer><span>T-NBA CHAMPIONSHIP</span><span>HAFTA GİRİŞİ</span></footer>
+</div>
+
+<script>
+const TAKIMLAR = ["Dosma's Crazy Horses","Sin City Wolves","Ventolins","Cardinals","San Andon Spurs",
+  "Kaplıca Gunslingers","Phoenix Ashes","Borçka Bulls","Peripol Hornets","Wild Butterfli's",
+  "Sultan Selim Suns","Dağsu Bears","Ottoman","God's Wrath","Giresun Hazelnuts","Eagles","Rhizus Hawks","Wildcats"];
+const KATEGORILER = [["FG%","FIELD GOAL %"],["FT%","FREE THROW %"],["3PTM","THREE POINTERS MADE"],
+  ["PTS","POINTS"],["OREB","OFFENSIVE REBOUNDS"],["DREB","DEFENSIVE REBOUNDS"],["AST","ASSISTS"],
+  ["ST","STEALS"],["BLK","BLOCKS"],["TO","TURNOVERS"],["A/T","ASSIST / TURNOVER"]];
+const MAC_SAYISI = 9, KAT_SAYISI = 11;
+
+function secenekler(){ return '<option value="">— takım seç —</option>' + TAKIMLAR.map(t=>`<option>${t.replace(/</g,"&lt;")}</option>`).join(""); }
+
+// Maç satırları
+const macKutu = document.getElementById("maclar");
+for (let i=0;i<MAC_SAYISI;i++){
+  const d=document.createElement("div"); d.className="mac"; d.innerHTML=
+    `<select id="mA${i}" aria-label="${i+1}. maç ev takımı">${secenekler()}</select>`+
+    `<input type="number" id="sA${i}" min="0" max="11" placeholder="0" aria-label="skor">`+
+    `<div class="dash">–</div>`+
+    `<input type="number" id="sB${i}" min="0" max="11" placeholder="0" aria-label="skor">`+
+    `<select id="mB${i}" aria-label="${i+1}. maç deplasman takımı">${secenekler()}</select>`;
+  macKutu.appendChild(d);
+}
+// En'ler
+document.getElementById("enler").innerHTML = KATEGORILER.map(([k,en],i)=>
+  `<div class="kat"><div class="kod">${k}<small>${en}</small></div>`+
+  `<select id="enT${i}">${secenekler()}</select>`+
+  `<input id="enV${i}" placeholder="değer">`+`</div>`).join("");
+// Oyuncu liderleri
+document.getElementById("oyuncular").innerHTML = KATEGORILER.map(([k,en],i)=>
+  `<div class="kat3"><div class="kod">${k}<small>${en}</small></div>`+
+  `<input id="oyA${i}" placeholder="oyuncu adı">`+
+  `<select id="oyT${i}">${secenekler()}</select>`+
+  `<input id="oyV${i}" placeholder="değer">`+`</div>`).join("");
+// Fikstür
+document.getElementById("fikstur").innerHTML = Array.from({length:MAC_SAYISI},(_,i)=>
+  `<div class="fik"><select id="fA${i}">${secenekler()}</select><div class="vs">VS</div><select id="fB${i}">${secenekler()}</select></div>`).join("");
+
+const $=id=>document.getElementById(id);
+const deger=id=>$(id).value.trim();
+
+function macOku(){
+  const maclar=[], kullanilan=new Map(), hatalar=[];
+  for(let i=0;i<MAC_SAYISI;i++){
+    const a=deger(`mA${i}`), b=deger(`mB${i}`), sa=deger(`sA${i}`), sb=deger(`sB${i}`);
+    const kutu=macKutu.children[i];
+    kutu.classList.remove("err");
+    $(`mA${i}`).classList.remove("win"); $(`mB${i}`).classList.remove("win");
+    if(!a && !b && sa==="" && sb==="") continue;
+    let hata=null;
+    if(!a||!b) hata=`${i+1}. maçta takım seçilmemiş`;
+    else if(a===b) hata=`${i+1}. maçta iki taraf da ${a}`;
+    for(const t of [a,b]) if(t){ if(kullanilan.has(t)) hata=hata??`${t} birden fazla maçta`; else kullanilan.set(t,i); }
+    if(!hata && sa==="" && sb==="") continue; // takımlar hazır, skor bekleniyor — hata değil
+    if(!hata){
+      if(sa===""||sb==="") hata=`${i+1}. maçın skoru eksik`;
+      else if(+sa+ +sb>KAT_SAYISI) hata=`${i+1}. maçta skor toplamı ${+sa+ +sb} — en fazla ${KAT_SAYISI} olabilir`;
+    }
+    if(hata){ hatalar.push(hata); kutu.classList.add("err"); }
+    else{
+      maclar.push([a,+sa,b,+sb]);
+      if(+sa>+sb) $(`mA${i}`).classList.add("win"); else if(+sb>+sa) $(`mB${i}`).classList.add("win");
+    }
+  }
+  return {maclar,hatalar,kullanilan};
+}
+
+// Bir grupta seçilmiş takımları o grubun diğer listelerinde kilitle
+function kilitle(idler){
+  const secili=new Map();
+  for(const id of idler){ const v=deger(id); if(v) secili.set(v,id); }
+  for(const id of idler){
+    for(const opt of $(id).options){
+      opt.disabled = !!opt.value && secili.has(opt.value) && secili.get(opt.value)!==id;
+    }
+  }
+}
+const macSecimleri=[], fikSecimleri=[];
+for(let i=0;i<MAC_SAYISI;i++){ macSecimleri.push(`mA${i}`,`mB${i}`); fikSecimleri.push(`fA${i}`,`fB${i}`); }
+
+function fiksturSayisi(){
+  let n=0;
+  for(let i=0;i<MAC_SAYISI;i++) if(deger(`fA${i}`)&&deger(`fB${i}`)) n++;
+  return n;
+}
+function modUygula(){
+  const m=$("modFikstur").checked;
+  for(const id of ["macHint","maclar","macDurum","dEnler","dOyuncu"]) $(id).hidden=m;
+  $("haftaSatiri").hidden=m;
+  if(m) $("dFikstur").open=true;
+}
+function durumGuncelle(){
+  modUygula();
+  kilitle(macSecimleri); kilitle(fikSecimleri);
+  if($("modFikstur").checked){
+    const n=fiksturSayisi();
+    $("btnKopyala").disabled = !(n>0 && deger("fhafta")!=="");
+    $("btnKopyala").textContent = "FİKSTÜR METNİNİ OLUŞTUR VE KOPYALA";
+    taslakKaydet();
+    return;
+  }
+  $("btnKopyala").textContent = "METNİ OLUŞTUR VE KOPYALA";
+  const {maclar,hatalar,kullanilan}=macOku();
+  const d=$("macDurum");
+  const eksik=TAKIMLAR.filter(t=>!kullanilan.has(t));
+  if(hatalar.length){ d.className="durum kotu"; d.textContent="⚠ "+hatalar[0]; }
+  else if(maclar.length===MAC_SAYISI){ d.className="durum ok"; d.textContent=`✓ ${MAC_SAYISI} maç girildi, 18 takım tamam.`; }
+  else if(oneriNotu && maclar.length===0){ d.className="durum ok"; d.textContent="✓ Eşleşmeler geçen hafta girdiğin fikstürden hazırlandı — sadece skorları yaz."; }
+  else{ d.className="durum"; d.textContent=`${maclar.length}/${MAC_SAYISI} maç girildi${eksik.length&&maclar.length?` · sırada: ${eksik.slice(0,3).join(", ")}${eksik.length>3?"…":""}`:""}`; }
+  $("btnKopyala").disabled = !(maclar.length===MAC_SAYISI && !hatalar.length && deger("hafta")!=="");
+  taslakKaydet();
+}
+
+const J=v=>JSON.stringify(v);
+function metinUret(){
+  const satir=a=>"    "+J(a).replace(/,(?=\S)/g,", ");
+  if($("modFikstur").checked){
+    const pairs=[];
+    for(let i=0;i<MAC_SAYISI;i++) if(deger(`fA${i}`)&&deger(`fB${i}`)) pairs.push([deger(`fA${i}`),deger(`fB${i}`)]);
+    const fh=+deger("fhafta");
+    return `// T-NBA SADECE FİKSTÜR girişi — Hafta Girişi sayfasıyla üretildi (${new Date().toLocaleDateString("tr-TR")}).
+// Maç sonuçlarına dokunulmaz; yalnızca fikstür görseli güncellenir.
+export const GIRDI = {
+  hafta: ${fh},
+  maclar: [
+  ],
+  enler: [
+  ],
+  oyuncu_liderleri: [
+  ],
+  fikstur: {
+    hafta: ${fh},
+    pairs: [
+${pairs.map(satir).join(",\n")}
+    ],
+  },
+};
+`;
+  }
+  const {maclar}=macOku();
+  const hafta=+deger("hafta");
+  const enler=[], oyuncular=[], pairs=[];
+  for(let i=0;i<KAT_SAYISI;i++){
+    const [k,en]=KATEGORILER[i];
+    if(deger(`enT${i}`)&&deger(`enV${i}`)) enler.push([k,en,deger(`enV${i}`),deger(`enT${i}`)]);
+    if(deger(`oyA${i}`)&&deger(`oyV${i}`)) oyuncular.push([k,en,deger(`oyV${i}`),deger(`oyA${i}`),deger(`oyT${i}`)||""]);
+  }
+  for(let i=0;i<MAC_SAYISI;i++) if(deger(`fA${i}`)&&deger(`fB${i}`)) pairs.push([deger(`fA${i}`),deger(`fB${i}`)]);
+  return `// T-NBA haftalık giriş — Hafta Girişi sayfasıyla üretildi (${new Date().toLocaleDateString("tr-TR")}).
+export const GIRDI = {
+  hafta: ${hafta},${$("sezonbasi").checked?"\n  sezon_basi: true,":""}
+  maclar: [
+${maclar.map(satir).join(",\n")}
+  ],
+  enler: [
+${enler.map(satir).join(",\n")}
+  ],
+  oyuncu_liderleri: [
+${oyuncular.map(satir).join(",\n")}
+  ],
+  fikstur: {
+    hafta: ${+deger("fhafta")||hafta+1},
+    pairs: [
+${pairs.map(satir).join(",\n")}
+    ],
+  },
+};
+`;
+}
+
+$("btnKopyala").addEventListener("click",async()=>{
+  const metin=metinUret();
+  $("cikti").value=metin; $("sonuc").classList.add("goster");
+  try{ await navigator.clipboard.writeText(metin); $("kopyaMesaj").textContent="✓ Kopyalandı! Şimdi sağdaki düğmeyle GitHub'ı aç."; }
+  catch{ $("cikti").focus(); $("cikti").select(); $("kopyaMesaj").textContent="Otomatik kopyalanamadı — aşağıdaki metin seçildi, Ctrl/Cmd+C ile kopyala."; }
+  // Gelecek hafta için öneri sakla: fikstür eşleşmeleri, maç girişinde hazır gelsin
+  try{
+    const pairs=[];
+    for(let i=0;i<MAC_SAYISI;i++) if(deger(`fA${i}`)&&deger(`fB${i}`)) pairs.push([deger(`fA${i}`),deger(`fB${i}`)]);
+    const oneriHafta = $("modFikstur").checked ? (+deger("fhafta")||null) : (+deger("hafta")||0)+1;
+    localStorage.setItem("tnba-oneri",JSON.stringify({hafta:oneriHafta, pairs}));
+    localStorage.removeItem("tnba-taslak"); // gönderilen hafta taslak olarak kalmasın
+  }catch{}
+});
+
+// Yeni haftaya hazırlık: taslak boşsa, geçen sefer girilen fikstürden maçları hazırla
+function oneriUygula(){ try{
+  const oneri=JSON.parse(localStorage.getItem("tnba-oneri")||"null");
+  if(!oneri) return;
+  if(deger("hafta")==="") $("hafta").value=oneri.hafta;
+  const bosMu = macSecimleri.every(id=>deger(id)==="");
+  if(bosMu && oneri.pairs?.length){
+    oneri.pairs.forEach(([a,b],i)=>{ if(i<MAC_SAYISI){ $(`mA${i}`).value=a; $(`mB${i}`).value=b; } });
+    oneriNotu=true;
+  }
+}catch{} }
+let oneriNotu=false;
+
+// Taslak (sadece bu tarayıcıda hatırlanır)
+function taslakKaydet(){ try{
+  const t={};
+  document.querySelectorAll("input,select").forEach(e=>{ if(e.type==="checkbox") t[e.id]=e.checked; else t[e.id]=e.value; });
+  localStorage.setItem("tnba-taslak",JSON.stringify(t));
+}catch{} }
+function taslakYukle(){ try{
+  const t=JSON.parse(localStorage.getItem("tnba-taslak")||"{}");
+  for(const [id,v] of Object.entries(t)){ const e=$(id); if(!e) continue; if(e.type==="checkbox") e.checked=v; else e.value=v; }
+}catch{} }
+// Fotoğraflardan okunan takım istatistikleri burada birikir (takım -> {kategori: değer})
+const topluStat={};
+function sayiya(v){ const n=parseFloat(String(v).replace(/^\./,"0.").replace(",",".")); return Number.isNaN(n)?null:n; }
+function enleriHesapla(){
+  let dolduruldu=false;
+  KATEGORILER.forEach(([kod],i)=>{
+    let enIyi=null;
+    for(const [takim,statlar] of Object.entries(topluStat)){
+      const ham=statlar[kod]; if(ham===undefined||ham===null||ham==="") continue;
+      const n=sayiya(ham); if(n===null) continue;
+      const dahaIyi = kod==="TO" ? (enIyi===null||n<enIyi.n) : (enIyi===null||n>enIyi.n);
+      if(dahaIyi) enIyi={takim, ham:String(ham), n};
+    }
+    if(enIyi){ $(`enT${i}`).value=enIyi.takim; $(`enV${i}`).value=enIyi.ham; dolduruldu=true; }
+  });
+  if(dolduruldu) $("dEnler").open=true;
+}
+
+// Fotoğraftan okuma (Claude'a sorma yeteneği olan görüntüleyicilerde açılır)
+(async()=>{
+  try{
+    const sample = await window.claude?.use?.("sample");
+    if(!sample) return;
+    const caps = await sample.limits().catch(()=>null);
+    if(!caps?.images) return;
+    $("fotoKutu").hidden=false;
+    $("fotoSec").accept = caps.images.mediaTypes.join(",");
+    const HATA_MESAJI = {
+      not_granted:"Bu sayfanın Claude'a sormasına izin verilmedi — skorları elle girebilirsin.",
+      sampling_disabled:"Hesabında Claude kullanımı kapalı — skorları elle gir.",
+      rate_limited:"Şu an çok yoğun ya da kullanım limitin doldu — biraz sonra dene ya da elle gir.",
+      image_rejected:"Bu dosya okunamadı — ekran görüntüsünü PNG/JPEG olarak dene.",
+      refused:"Görüntü işlenemedi — farklı bir ekran görüntüsü dene.",
+      invalid_json:"Skorlar çözülemedi — tekrar dene ya da elle gir.",
+      session_expired:"Claude oturumun düşmüş — sayfayı yenileyip tekrar giriş yap.",
+    };
+    $("btnFoto").addEventListener("click", async ()=>{
+      const dosyalar=$("fotoSec").files;
+      const d=$("fotoDurum");
+      if(!dosyalar.length){ d.className="durum kotu"; d.textContent="Önce bir ekran görüntüsü seç."; return; }
+      if(dosyalar.length>caps.images.maxCount){ d.className="durum kotu"; d.textContent=`En fazla ${caps.images.maxCount} görüntü yüklenebilir.`; return; }
+      $("btnFoto").disabled=true; d.className="durum"; d.textContent="Okunuyor… (ilk seferde izin sorusu çıkabilir, 10-30 sn sürebilir)";
+      try{
+        const cevap = await sample.json(
+`Ekteki görüntüler Yahoo Fantasy Basketball liginin haftalık ekranları: Scoreboard (maç listesi) ve/veya tek tek maç detay sayfaları (iki takımın kategori istatistik tablosu). Görüntülerden şunları çıkar:
+1) Hafta numarası (görünüyorsa; "Week 5" gibi)
+2) Her maç: iki takım adı ve maç skoru ("8-3" gibi; soldaki sayı soldaki/üstteki takımın skorudur)
+3) Kategori tablosu görünen HER TAKIM için kategori değerleri. Kategori kodları: ${KATEGORILER.map(k=>k[0]).join(", ")}. Değerleri ekranda yazıldığı gibi aynen aktar (".522", "613" gibi).
+
+Takım adlarını ŞU listedeki yazımla birebir eşleştir (görüntüde kısaltılmış olabilir, en yakın olanı seç):
+${TAKIMLAR.join(" | ")}
+
+Görüntü, HENÜZ OYNANMAMIŞ bir haftanın fikstürüyse (skorsuz eşleşme listesi), eşleşmeleri "fikstur" alanına yaz.
+
+SADECE şu JSON ile yanıt ver, başka hiçbir şey yazma:
+{"hafta": 5, "maclar": [["Takım Adı", 8, "Diğer Takım", 3]], "istatistikler": {"Takım Adı": {"FG%": ".522", "PTS": "613"}}, "fikstur": [["Takım Adı", "Diğer Takım"]]}
+Hafta görünmüyorsa "hafta": null yaz. İlgili veri görünmüyorsa alanı boş bırak ([] veya {}). Emin olamadığın maçı/değeri dahil etme.`,
+          { images: dosyalar, cache:false }
+        );
+        let dolu=0, statTakim=0;
+        if(cevap && Array.isArray(cevap.maclar)){
+          if(cevap.hafta && deger("hafta")==="") $("hafta").value=cevap.hafta;
+          cevap.maclar.slice(0,MAC_SAYISI).forEach((m)=>{
+            if(!Array.isArray(m)||m.length<4) return;
+            const [a,sa,b,sb]=m;
+            if(!TAKIMLAR.includes(a)||!TAKIMLAR.includes(b)) return;
+            // Bu eşleşme zaten formda varsa aynı satırı güncelle, yoksa ilk boş satıra yaz
+            let hedef=-1;
+            for(let i=0;i<MAC_SAYISI;i++){
+              const ta=deger(`mA${i}`), tb=deger(`mB${i}`);
+              if((ta===a&&tb===b)||(ta===b&&tb===a)){ hedef=i; break; }
+            }
+            if(hedef<0) for(let i=0;i<MAC_SAYISI;i++){ if(!deger(`mA${i}`)&&!deger(`mB${i}`)){ hedef=i; break; } }
+            if(hedef<0) return;
+            $(`mA${hedef}`).value=a; $(`sA${hedef}`).value=sa; $(`sB${hedef}`).value=sb; $(`mB${hedef}`).value=b; dolu++;
+          });
+        }
+        // Kategori istatistiklerini biriktir, en'leri hesapla
+        if(cevap && cevap.istatistikler && typeof cevap.istatistikler==="object"){
+          for(const [takim,statlar] of Object.entries(cevap.istatistikler)){
+            if(!TAKIMLAR.includes(takim)||typeof statlar!=="object") continue;
+            topluStat[takim]={...(topluStat[takim]||{}),...statlar};
+          }
+          statTakim=Object.keys(topluStat).length;
+          enleriHesapla();
+        }
+        // Skorsuz fikstür görüntüsü: eşleşmeleri fikstür bölümüne yaz
+        let fikDolu=0;
+        if(cevap && Array.isArray(cevap.fikstur) && cevap.fikstur.length){
+          if(cevap.hafta && deger("fhafta")==="") $("fhafta").value=cevap.hafta;
+          cevap.fikstur.slice(0,MAC_SAYISI).forEach((p)=>{
+            if(!Array.isArray(p)||p.length<2) return;
+            const [a,b]=p;
+            if(!TAKIMLAR.includes(a)||!TAKIMLAR.includes(b)) return;
+            for(let i=0;i<MAC_SAYISI;i++){
+              const fa=deger(`fA${i}`), fb=deger(`fB${i}`);
+              if((fa===a&&fb===b)||(fa===b&&fb===a)) return;
+            }
+            for(let i=0;i<MAC_SAYISI;i++){
+              if(!deger(`fA${i}`)&&!deger(`fB${i}`)){ $(`fA${i}`).value=a; $(`fB${i}`).value=b; fikDolu++; break; }
+            }
+          });
+          if(fikDolu) $("dFikstur").open=true;
+        }
+        oneriNotu=false; durumGuncelle();
+        const parcalar=[];
+        if(dolu) parcalar.push(`${dolu} maç dolduruldu`);
+        if(statTakim) parcalar.push(`${statTakim}/18 takımın istatistiği okundu, Haftanın En'leri ona göre hesaplandı`);
+        if(fikDolu) parcalar.push(`${fikDolu} fikstür eşleşmesi dolduruldu`);
+        d.className = parcalar.length? "durum ok":"durum kotu";
+        d.textContent = parcalar.length? `✓ ${parcalar.join(" · ")} — lütfen Yahoo'yla karşılaştırıp kontrol et!`
+                            : "Görüntüden veri çıkarılamadı — daha net bir ekran görüntüsü dene ya da elle gir.";
+      }catch(e){
+        d.className="durum kotu";
+        d.textContent = HATA_MESAJI[e?.code] ?? "Bir sorun oldu — tekrar dene ya da skorları elle gir.";
+        if(e?.code==="not_granted"||e?.code==="sampling_disabled"||e?.code==="not_declared") $("fotoKutu").hidden=true;
+      }finally{ $("btnFoto").disabled=false; }
+    });
+  }catch{}
+})();
+
+taslakYukle();
+oneriUygula();
+document.addEventListener("input",durumGuncelle);
+durumGuncelle();
+</script>
