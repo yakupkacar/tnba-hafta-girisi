@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Archivo:wght@500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#0C1D15} a{color:#BC9440;text-decoration:none} a:hover{color:#E9CD82}</style>
+</helmet>
+<div data-screen-label="Sampiyonlar Klasik Yesil" style="width:1080px;height:1920px;box-sizing:border-box;position:relative;overflow:hidden;background:#122A1E;color:#EDE2C4;font-family:'Archivo',system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;text-align:center;padding:108px 100px 92px">
+  <div style="position:absolute;inset:30px;border:1px solid rgba(237,226,196,0.55);pointer-events:none"></div>
+  <div style="position:absolute;inset:40px;border:1px solid rgba(237,226,196,0.16);pointer-events:none"></div>
+  <img src="assets/tnba-logo.png" alt="T-NBA" style="position:relative;width:92px;height:92px;border-radius:50%;box-shadow:0 0 0 1px rgba(237,226,196,0.35)"></img>
+  <div style="position:relative;margin-top:26px;font-size:17px;font-weight:600;letter-spacing:0.5em;text-indent:0.5em;color:#EDE2C4;white-space:nowrap">T-NBA CHAMPIONSHIP</div>
+  <div style="position:relative;margin-top:20px;display:flex;align-items:center;gap:16px;width:100%;justify-content:center">
+    <div style="width:170px;height:1px;background:rgba(237,226,196,0.4)"></div>
+    <div style="width:7px;height:7px;transform:rotate(45deg);background:#BC9440"></div>
+    <div style="width:170px;height:1px;background:rgba(237,226,196,0.4)"></div>
+  </div>
+  <div style="position:relative;margin-top:30px;font-family:'Playfair Display',serif;font-size:90px;font-weight:700;line-height:1.04;white-space:nowrap">Şampiyonlar Listesi</div>
+  <div style="position:relative;margin-top:28px;display:flex;align-items:center;gap:16px;width:100%;justify-content:center">
+    <div style="width:76px;height:1px;background:rgba(237,226,196,0.4)"></div>
+    <div style="width:5px;height:5px;transform:rotate(45deg);background:#BC9440"></div>
+    <div style="width:76px;height:1px;background:rgba(237,226,196,0.4)"></div>
+  </div>
+  <div style="position:relative;flex:1;width:100%;display:flex;flex-direction:column;justify-content:space-evenly;margin-top:8px">
+    <sc-for list="{{ champs }}" as="ch" hint-placeholder-count="6">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:9px">
+        <div style="font-size:20px;font-weight:600;letter-spacing:0.34em;text-indent:0.34em;color:#BC9440;font-variant-numeric:tabular-nums;white-space:nowrap">{{ ch.sezon }}</div>
+        <div style="font-family:'Playfair Display',serif;font-size:54px;font-weight:700;line-height:1.05;white-space:nowrap">{{ ch.takim }}</div>
+        <div style="font-size:13px;letter-spacing:0.42em;text-indent:0.42em;color:#BC9440;white-space:nowrap">{{ ch.stars }}</div>
+        <sc-if value="{{ ch.last }}" hint-placeholder-val="{{ false }}"><div style="margin-top:1px;font-size:11px;font-weight:600;letter-spacing:0.36em;text-indent:0.36em;color:rgba(237,226,196,0.5);white-space:nowrap">SON ŞAMPİYON</div></sc-if>
+      </div>
+    </sc-for>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+      <div style="font-size:20px;font-weight:600;letter-spacing:0.34em;text-indent:0.34em;color:rgba(188,148,64,0.75);font-variant-numeric:tabular-nums;white-space:nowrap">2026-27</div>
+      <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:47px;font-weight:600;color:rgba(237,226,196,0.62);white-space:nowrap">Sıradaki şampiyon?</div>
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.36em;text-indent:0.36em;color:rgba(237,226,196,0.45);white-space:nowrap">SEZON SONUNDA YAZILACAK</div>
+    </div>
+  </div>
+  <div style="position:relative;margin-top:24px;display:flex;align-items:center;gap:16px;width:100%;justify-content:center">
+    <div style="width:120px;height:1px;background:rgba(237,226,196,0.35)"></div>
+    <div style="width:6px;height:6px;transform:rotate(45deg);background:#BC9440"></div>
+    <div style="width:120px;height:1px;background:rgba(237,226,196,0.35)"></div>
+  </div>
+  <div style="position:relative;width:100%;display:flex;flex-direction:column;align-items:center;gap:13px;margin-top:22px">
+    <div style="letter-spacing:0.34em;text-indent:0.34em;color:#BC9440;font-size:12px;font-weight:700;white-space:nowrap">EN ÇOK ŞAMPİYONLUK</div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;column-gap:36px;row-gap:8px">
+      <sc-for list="{{ tallyItems }}" as="t" hint-placeholder-count="4">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="font-size:17px;font-weight:500;letter-spacing:0.12em;color:rgba(237,226,196,0.88);white-space:nowrap">{{ t.nameUp }}</div>
+          <div style="font-size:12px;letter-spacing:0.14em;color:#BC9440;white-space:nowrap;line-height:1">{{ t.stars }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:1920}}">
+class Component extends DCLogic {
+  state = { d: null };
+  componentDidMount() { import('./tnba-data.js').then(m => this.setState({ d: m })); }
+  renderVals() {
+    const d = this.state.d;
+    if (!d) return { champs: [], tallyItems: [], altBaslik: "" };
+    const C = d.CHAMPIONS || [];
+    const seen = {};
+    const champs = C.map((c, i) => {
+      seen[c[1]] = (seen[c[1]] || 0) + 1;
+      return { sezon: c[0], takim: c[1], stars: "★".repeat(seen[c[1]]), last: i === C.length - 1 };
+    });
+    const tallyItems = Object.entries(seen).sort((a, b) => b[1] - a[1])
+      .map(e => ({ name: e[0], nameUp: e[0].toUpperCase(), stars: "★".repeat(e[1]) }));
+    return { champs, tallyItems };
+  }
+}
+</script>
+</body>
+</html>

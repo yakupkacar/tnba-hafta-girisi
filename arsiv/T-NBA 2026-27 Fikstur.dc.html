@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-785da292-216d-47a9-800f-8e6c4680f25f/styles.css">
+<script src="_ds/modernist-785da292-216d-47a9-800f-8e6c4680f25f/_ds_bundle.js"></script>
+<script src="image-slot.js"></script>
+<style>body{margin:0;background:#e4e2df} a{color:var(--color-accent,#ec3013);text-decoration:none} a:hover{color:var(--color-accent-700,#a02613)}</style>
+</helmet>
+<div data-screen-label="Fikstur 26-27" style="width:1080px;height:1920px;box-sizing:border-box;position:relative;overflow:hidden;background:var(--color-bg,#f3f2f2);color:var(--color-text,#201e1d);font-family:var(--font-body,'Archivo',sans-serif);display:flex;flex-direction:column;padding:56px 64px 44px">
+  <div style="display:flex;align-items:center;gap:22px;padding-bottom:22px;border-bottom:2px solid var(--color-text,#201e1d)">
+    <img src="assets/tnba-logo.png" alt="T-NBA" style="width:72px;height:72px;border-radius:50%;box-shadow:0 0 0 2px var(--color-text,#201e1d)"></img>
+    <div style="font-size:27px;font-weight:900;letter-spacing:0.1em;white-space:nowrap">T-NBA CHAMPIONSHIP</div>
+    <div style="margin-left:auto;background:var(--color-accent,#ec3013);color:#fff;font-size:16px;font-weight:800;letter-spacing:0.18em;padding:10px 18px;white-space:nowrap">2026-27 SEZONU</div>
+  </div>
+  <div style="padding:34px 0 26px">
+    <div style="font-size:21px;font-weight:800;letter-spacing:0.28em;color:var(--color-accent,#ec3013);margin-bottom:14px">FİKSTÜR — HAFTANIN EŞLEŞMELERİ</div>
+    <div style="font-family:var(--font-heading,'Archivo',sans-serif);font-size:136px;font-weight:900;line-height:0.9;letter-spacing:-0.01em">{{ fhafta }}. HAFTA</div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;gap:14px;border-top:2px solid var(--color-text,#201e1d);padding-top:22px">
+    <sc-for list="{{ pairs }}" as="p" hint-placeholder-count="9">
+      <div style="position:relative;flex:1;display:grid;grid-template-columns:1fr 130px 1fr;align-items:center;background:#fbfaf9;border:1px solid rgba(32,30,29,0.22);padding:0 26px;overflow:hidden">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:6px;background:{{ p.lc }}"></div>
+        <div style="position:absolute;right:0;top:0;bottom:0;width:6px;background:{{ p.rc }}"></div>
+        <div style="display:flex;align-items:center;gap:16px;min-width:0">
+          <div style="flex-shrink:0;width:48px;height:48px;border:2px solid {{ p.lc }};box-sizing:border-box;background:#fff;overflow:hidden;position:relative;display:grid;place-items:center;font-size:14px;font-weight:800"><span>{{ p.lm }}</span><div style="position:absolute;inset:0"><image-slot id="tl-{{ p.lm }}" bare="true" shape="rect" placeholder="{{ p.lm }}"></image-slot></div></div>
+          <div style="min-width:0;font-size:25px;font-weight:800;white-space:nowrap">{{ p.ln }}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <div style="font-size:30px;font-weight:900;letter-spacing:0.08em;color:rgba(32,30,29,0.8)">VS</div>
+          <div style="width:22px;height:2px;background:var(--color-accent,#ec3013)"></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:flex-end;gap:16px;min-width:0">
+          <div style="min-width:0;font-size:25px;font-weight:800;white-space:nowrap;text-align:right">{{ p.rn }}</div>
+          <div style="flex-shrink:0;width:48px;height:48px;border:2px solid {{ p.rc }};box-sizing:border-box;background:#fff;overflow:hidden;position:relative;display:grid;place-items:center;font-size:14px;font-weight:800"><span>{{ p.rm }}</span><div style="position:absolute;inset:0"><image-slot id="tl-{{ p.rm }}" bare="true" shape="rect" placeholder="{{ p.rm }}"></image-slot></div></div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="margin-top:22px;display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:2px solid var(--color-text,#201e1d);font-size:15px;font-weight:700;letter-spacing:0.22em;color:rgba(32,30,29,0.55)">
+    <div>T-NBA CHAMPIONSHIP</div><div>2026-27 SEZONU</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:1920}}">
+class Component extends DCLogic {
+  state = { d: null };
+  componentDidMount() { import('./tnba-data.js').then(m => this.setState({ d: m })); }
+  renderVals() {
+    const d = this.state.d;
+    if (!d) return { fhafta: "", pairs: [] };
+    const T = d.TEAMS;
+    const FX = d.FIXTURES || { hafta: d.WEEK.hafta + 1, pairs: d.WEEK.matchups.map(g => [g[0], g[2]]) };
+    const pairs = FX.pairs.map(p => ({ ln: p[0], rn: p[1], lm: T[p[0]][0], lc: T[p[0]][1], rm: T[p[1]][0], rc: T[p[1]][1] }));
+    return { fhafta: FX.hafta, pairs };
+  }
+}
+</script>
+</body>
+</html>

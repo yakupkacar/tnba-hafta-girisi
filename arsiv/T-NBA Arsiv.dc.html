@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-785da292-216d-47a9-800f-8e6c4680f25f/styles.css">
+<script src="_ds/modernist-785da292-216d-47a9-800f-8e6c4680f25f/_ds_bundle.js"></script>
+<script src="image-slot.js"></script>
+<style>body{margin:0;background:var(--color-bg,#f3f2f2)} a{color:var(--color-accent,#ec3013);text-decoration:none} a:hover{color:var(--color-accent-700,#a02613)}</style>
+</helmet>
+<div data-screen-label="Arsiv" style="min-height:100vh;box-sizing:border-box;color:var(--color-text,#201e1d);font-family:var(--font-body,'Archivo',sans-serif);max-width:1240px;margin:0 auto;padding:44px 48px 80px">
+  <div style="display:flex;align-items:center;gap:20px;padding-bottom:20px;border-bottom:2px solid var(--color-text,#201e1d)">
+    <img src="assets/tnba-logo.png" alt="T-NBA" style="width:56px;height:56px;border-radius:50%;box-shadow:0 0 0 2px var(--color-text,#201e1d)"></img>
+    <div style="font-size:23px;font-weight:900;letter-spacing:0.1em">T-NBA CHAMPIONSHIP — SEZON ARŞİVİ</div>
+    <div style="margin-left:auto;background:var(--color-accent,#ec3013);color:#fff;font-size:13px;font-weight:800;letter-spacing:0.18em;padding:8px 14px;white-space:nowrap">2026-27 SEZONU</div>
+  </div>
+  <div style="display:grid;grid-template-columns:220px 1fr;gap:40px;padding-top:32px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-size:13px;font-weight:800;letter-spacing:0.24em;color:rgba(32,30,29,0.5);margin-bottom:4px">HAFTALAR</div>
+      <sc-for list="{{ weeks }}" as="w" hint-placeholder-count="1">
+        <div onClick="{{ w.pick }}" style="cursor:pointer;padding:13px 16px;border:1px solid rgba(32,30,29,0.35);font-size:16px;font-weight:800;letter-spacing:0.1em;background:{{ w.bg }};color:{{ w.fg }}" style-hover="border-color:#201e1d">{{ w.label }}</div>
+      </sc-for>
+    </div>
+    <div style="min-width:0">
+      <div style="display:flex;gap:10px;margin-bottom:26px">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+          <div onClick="{{ t.pick }}" style="cursor:pointer;padding:12px 22px;border:1px solid rgba(32,30,29,0.35);font-size:15px;font-weight:800;letter-spacing:0.14em;background:{{ t.bg }};color:{{ t.fg }}" style-hover="border-color:#201e1d">{{ t.label }}</div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ isStand }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="display:grid;grid-template-columns:64px 48px 1fr 130px 190px;align-items:center;border-top:2px solid var(--color-text,#201e1d);border-bottom:2px solid var(--color-text,#201e1d);padding:10px 0;font-size:13px;font-weight:800;letter-spacing:0.2em;color:rgba(32,30,29,0.55)">
+            <div>#</div><div></div><div>TAKIM</div><div style="text-align:right">W-L-T</div><div style="text-align:right">FORM</div>
+          </div>
+          <sc-for list="{{ rows }}" as="row" hint-placeholder-count="18">
+            <div style="display:grid;grid-template-columns:64px 48px 1fr 130px 190px;align-items:center;height:56px;border-bottom:1px solid rgba(32,30,29,0.14)">
+              <div style="font-size:22px;font-weight:900;color:rgba(32,30,29,0.55)">{{ row.r }}</div>
+              <div style="width:36px;height:36px;border:2px solid {{ row.c }};box-sizing:border-box;background:#fff;overflow:hidden;position:relative;display:grid;place-items:center;font-size:11px;font-weight:800"><span>{{ row.m }}</span><div style="position:absolute;inset:0"><image-slot id="tl-{{ row.m }}" bare="true" shape="rect" placeholder="{{ row.m }}"></image-slot></div></div>
+              <div style="font-size:19px;font-weight:700;padding-left:14px;white-space:nowrap;overflow:hidden">{{ row.n }}</div>
+              <div style="text-align:right;font-size:18px;font-weight:800;font-variant-numeric:tabular-nums">{{ row.rec }}</div>
+              <div style="display:flex;gap:6px;justify-content:flex-end">
+                <sc-for list="{{ row.form }}" as="f" hint-placeholder-count="5">
+                  <sc-if value="{{ f.w }}" hint-placeholder-val="{{ true }}"><div style="width:21px;height:21px;display:grid;place-items:center;background:var(--color-text,#201e1d);color:var(--color-bg,#f3f2f2);font-size:11px;font-weight:900">W</div></sc-if>
+                  <sc-if value="{{ f.l }}" hint-placeholder-val="{{ false }}"><div style="width:21px;height:21px;display:grid;place-items:center;border:1px solid rgba(32,30,29,0.3);box-sizing:border-box;color:rgba(32,30,29,0.4);font-size:11px;font-weight:800">L</div></sc-if>
+                  <sc-if value="{{ f.t }}" hint-placeholder-val="{{ false }}"><div style="width:21px;height:21px;display:grid;place-items:center;border:2px solid var(--color-accent,#ec3013);box-sizing:border-box;color:var(--color-accent,#ec3013);font-size:11px;font-weight:800">T</div></sc-if>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isRes }}" hint-placeholder-val="{{ false }}">
+        <div style="border-top:2px solid var(--color-text,#201e1d)">
+          <sc-for list="{{ games }}" as="g" hint-placeholder-count="9">
+            <div style="display:grid;grid-template-columns:1fr 150px 1fr;align-items:center;height:64px;border-bottom:1px solid rgba(32,30,29,0.14)">
+              <sc-if value="{{ g.lw }}" hint-placeholder-val="{{ true }}"><div style="font-size:20px;font-weight:800;white-space:nowrap;overflow:hidden">{{ g.ln }}</div></sc-if>
+              <sc-if value="{{ g.rw }}" hint-placeholder-val="{{ false }}"><div style="font-size:20px;font-weight:600;color:rgba(32,30,29,0.5);white-space:nowrap;overflow:hidden">{{ g.ln }}</div></sc-if>
+              <div style="display:flex;align-items:center;justify-content:center;gap:10px;font-size:26px;font-weight:900;font-variant-numeric:tabular-nums">
+                <div>{{ g.ls }}</div><div style="width:12px;height:2px;background:rgba(32,30,29,0.35)"></div><div>{{ g.rs }}</div>
+              </div>
+              <sc-if value="{{ g.rw }}" hint-placeholder-val="{{ false }}"><div style="font-size:20px;font-weight:800;text-align:right;white-space:nowrap;overflow:hidden">{{ g.rn }}</div></sc-if>
+              <sc-if value="{{ g.lw }}" hint-placeholder-val="{{ true }}"><div style="font-size:20px;font-weight:600;color:rgba(32,30,29,0.5);text-align:right;white-space:nowrap;overflow:hidden">{{ g.rn }}</div></sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isLead }}" hint-placeholder-val="{{ false }}">
+        <div style="border-top:2px solid var(--color-text,#201e1d)">
+          <sc-for list="{{ cats }}" as="c" hint-placeholder-count="11">
+            <div style="display:grid;grid-template-columns:200px 1fr 300px;align-items:center;height:58px;border-bottom:1px solid rgba(32,30,29,0.14)">
+              <div style="font-size:20px;font-weight:900">{{ c.code }}</div>
+              <div style="font-size:26px;font-weight:900;font-variant-numeric:tabular-nums">{{ c.val }}</div>
+              <div style="font-size:19px;font-weight:700;text-align:right;white-space:nowrap">{{ c.team }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { list: null, mod: null, sel: 0, tab: 0 };
+  componentDidMount() {
+    import('./arsiv/haftalar.js').then(m => {
+      this.setState({ list: m.HAFTALAR });
+      this.loadWeek(m.HAFTALAR, 0);
+    });
+  }
+  loadWeek(list, i) {
+    const f = list[i].dosya.replace('./', '');
+    import('./arsiv/' + f).then(m => this.setState({ mod: m, sel: i }));
+  }
+  renderVals() {
+    const { list, mod, sel, tab } = this.state;
+    const ink = '#201e1d', bgOn = '#201e1d', fgOn = '#f3f2f2';
+    const weeks = (list || []).map((w, i) => ({
+      label: w.hafta + '. HAFTA',
+      pick: () => this.loadWeek(list, i),
+      bg: i === sel ? bgOn : 'transparent', fg: i === sel ? fgOn : ink
+    }));
+    const tabs = ['PUAN DURUMU', 'SONUÇLAR', "EN'LER"].map((t, i) => ({
+      label: t, pick: () => this.setState({ tab: i }),
+      bg: i === tab ? bgOn : 'transparent', fg: i === tab ? fgOn : ink
+    }));
+    let rows = [], games = [], cats = [];
+    if (mod) {
+      const T = mod.TEAMS;
+      rows = mod.WEEK.standings.map(a => ({
+        r: a.r, n: a.n, m: T[a.n][0], c: T[a.n][1], rec: a.rec,
+        form: a.form.split('').map(x => ({ w: x === 'W', l: x === 'L', t: x === 'T' }))
+      }));
+      games = mod.WEEK.matchups.map(g => ({ ln: g[0], ls: g[1], rn: g[2], rs: g[3], lw: g[1] > g[3], rw: g[3] > g[1] }));
+      cats = mod.WEEK.leaders.map(c => ({ code: c[0], val: c[2], team: c[3] }));
+    }
+    return { weeks, tabs, rows, games, cats, isStand: tab === 0, isRes: tab === 1, isLead: tab === 2 };
+  }
+}
+</script>
+</body>
+</html>
