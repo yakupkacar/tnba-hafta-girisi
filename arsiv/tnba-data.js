@@ -12,7 +12,7 @@ export const TEAMS = {
   "Peripol Hornets": ["PH", "#00889E", "assets/teams/PH.png"],
   "Wild Butterfli's": ["WB", "#8A5BB0", "assets/teams/WB.png"],
   "Sultan Selim Suns": ["SS", "#E8872B", "assets/teams/SS.jpg"],
-  "Dağsu Bears": ["DB", "#4E7A54", "assets/teams/DB.png"],
+  "Dağsu Bears": ["DB", "#4E7A54", "assets/teams/DB.jpg"],
   "Ottoman": ["OT", "#9E2235", "assets/teams/OT.jpg"],
   "God's Wrath": ["GW", "#6A4FA8", "assets/teams/GW.jpg"],
   "Giresun Hazelnuts": ["GH", "#8A6A42", "assets/teams/GH.png"],
