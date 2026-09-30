@@ -101,6 +101,7 @@ footer{margin-top:44px; border-top:2px solid var(--line-strong); padding-top:12p
   <div class="hafta"><label for="hafta">Hafta No</label><input type="number" id="hafta" min="1" max="30" value=""></div>
   <div class="check"><input type="checkbox" id="sezonbasi"><label for="sezonbasi" style="margin:0; text-transform:none; font-size:14px; letter-spacing:0">Bu, sezonun İLK haftası</label></div>
 </div>
+<p class="hint">Not: Bizim sayım Yahoo'dan 1 geridedir (Yahoo "Week 2" = bizim 1. hafta). Fotoğraftan okumada bu fark otomatik düzeltilir; elle girerken BİZİM numarayı yaz.</p>
 <div class="foto" id="fotoKutu" hidden>
   <div class="fotoBaslik">📷 KISAYOL: FOTOĞRAFTAN DOLDUR</div>
   <p class="hint" style="margin:6px 0 10px">Yahoo Scoreboard'un ekran görüntüsünü yükle — skorları Claude okuyup formu doldurur. Maçların <b>detay sayfalarının</b> (kategori tablolu) ss'lerini de yüklersen Haftanın En'leri bölümü de otomatik hesaplanıp dolar. Birden fazla görüntü seçebilirsin; hepsi bir kerede sığmazsa gruplar halinde yükle, okunanlar birikir.</p>
@@ -158,6 +159,9 @@ const KATEGORILER = [["FG%","FIELD GOAL %"],["FT%","FREE THROW %"],["3PTM","THRE
   ["PTS","POINTS"],["OREB","OFFENSIVE REBOUNDS"],["DREB","DEFENSIVE REBOUNDS"],["AST","ASSISTS"],
   ["ST","STEALS"],["BLK","BLOCKS"],["TO","TURNOVERS"],["A/T","ASSIST / TURNOVER"]];
 const MAC_SAYISI = 9, KAT_SAYISI = 11;
+// Lig, NBA'in ilk haftasını atladı: Yahoo "Week 2" = bizim 1. hafta.
+// Fotoğraftan okunan hafta numarasına bu fark uygulanır.
+const HAFTA_FARKI = -1;
 
 function secenekler(){ return '<option value="">— takım seç —</option>' + TAKIMLAR.map(t=>`<option>${t.replace(/</g,"&lt;")}</option>`).join(""); }
 
@@ -418,7 +422,7 @@ Hafta görünmüyorsa "hafta": null yaz. İlgili veri görünmüyorsa alanı bo�
         );
         let dolu=0, statTakim=0;
         if(cevap && Array.isArray(cevap.maclar)){
-          if(cevap.hafta && deger("hafta")==="") $("hafta").value=cevap.hafta;
+          if(cevap.hafta && deger("hafta")==="") $("hafta").value=cevap.hafta+HAFTA_FARKI;
           cevap.maclar.slice(0,MAC_SAYISI).forEach((m)=>{
             if(!Array.isArray(m)||m.length<4) return;
             const [a,sa,b,sb]=m;
@@ -446,7 +450,7 @@ Hafta görünmüyorsa "hafta": null yaz. İlgili veri görünmüyorsa alanı bo�
         // Skorsuz fikstür görüntüsü: eşleşmeleri fikstür bölümüne yaz
         let fikDolu=0;
         if(cevap && Array.isArray(cevap.fikstur) && cevap.fikstur.length){
-          if(cevap.hafta && deger("fhafta")==="") $("fhafta").value=cevap.hafta;
+          if(cevap.hafta && deger("fhafta")==="") $("fhafta").value=cevap.hafta+HAFTA_FARKI;
           cevap.fikstur.slice(0,MAC_SAYISI).forEach((p)=>{
             if(!Array.isArray(p)||p.length<2) return;
             const [a,b]=p;
